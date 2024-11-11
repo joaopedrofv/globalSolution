@@ -1,0 +1,25 @@
+package gs.example.globalsolution.model;
+
+import jakarta.persistence.*;
+import lombok.Data;
+
+import java.sql.Timestamp;
+
+@Entity
+@Table(name = "CONFIGURACOES")
+@Data
+public class Configuracoes {
+    @Id
+    private long id;
+    @ManyToOne
+    @JoinColumn(name = "ID_USUARIO")
+    private Usuario usuario;
+    @Column(name = "HORARIO_CORTE_INICIO")
+    private Timestamp corteInicio;
+    @Column(name = "HORARIO_CORTE_FIM")
+    private Timestamp corteFim;
+    @Column(name = "LIMITE_ALERTA")
+    private long alerta;
+    @Column(name = "PREFERENCIAS")
+    private String preferencias;
+}
