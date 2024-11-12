@@ -1,6 +1,6 @@
 package gs.example.globalsolution.model.pagamentos;
 
-import gs.example.globalsolution.model.Usuario;
+import gs.example.globalsolution.model.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.Data;
 

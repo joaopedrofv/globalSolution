@@ -1,5 +1,6 @@
-package gs.example.globalsolution.model;
+package gs.example.globalsolution.model.cadastroDispositivos;
 
+import gs.example.globalsolution.model.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.Data;
 

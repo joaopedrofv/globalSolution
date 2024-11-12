@@ -1,4 +1,4 @@
-package gs.example.globalsolution.model;
+package gs.example.globalsolution.model.usuario;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

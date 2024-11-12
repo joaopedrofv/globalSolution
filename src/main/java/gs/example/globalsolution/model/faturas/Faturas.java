@@ -1,5 +1,7 @@
-package gs.example.globalsolution.model;
+package gs.example.globalsolution.model.faturas;
 
+import gs.example.globalsolution.model.cadastroDispositivos.CadastroDispositivos;
+import gs.example.globalsolution.model.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -21,5 +23,8 @@ public class Faturas {
     private int valorTotal;
     @Column(name = "DATA_VENCIMENTO")
     private Date dataVencimento;
-    @Column(name = )
+    @Column(name = "DATA_EMISSAO")
+    private Date dataEmissao;
+    @Column(name = "STATUS_FATURA")
+    private StatusFatura statusFatura;
 }
