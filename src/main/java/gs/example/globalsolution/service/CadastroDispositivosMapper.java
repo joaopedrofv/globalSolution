@@ -1,6 +1,7 @@
 package gs.example.globalsolution.service;
 
 import gs.example.globalsolution.dto.cadastroDispositivosDTO.CadastroDispositivosRequest;
+import gs.example.globalsolution.dto.cadastroDispositivosDTO.CadastroDispositivosResponse;
 import gs.example.globalsolution.model.cadastroDispositivos.CadastroDispositivos;
 import gs.example.globalsolution.model.usuario.Usuario;
 import org.springframework.stereotype.Service;
@@ -18,9 +19,9 @@ public class CadastroDispositivosMapper {
         return cadastroDispositivos;
     }
 
-    // CadastroDispositivos para CadastroDispositivosResponseDTO (caso precise de um DTO de resposta)
-    public CadastroDispositivosResponseDTO cadastroDispositivosToResponseDTO(CadastroDispositivos cadastroDispositivos) {
-        return new CadastroDispositivosResponseDTO(
+    // CadastroDispositivos para CadastroDispositivosResponse (DTO de resposta)
+    public CadastroDispositivosResponse cadastroDispositivosToResponseDTO(CadastroDispositivos cadastroDispositivos) {
+        return new CadastroDispositivosResponse(
                 cadastroDispositivos.getId(),
                 cadastroDispositivos.getUsuario(),
                 cadastroDispositivos.getTipoDispositivo(),
