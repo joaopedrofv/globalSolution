@@ -20,7 +20,7 @@ public class Configuracoes {
     @Column(name = "HORARIO_CORTE_FIM")
     private Timestamp corteFim;
     @Column(name = "LIMITE_ALERTA")
-    private long alerta;
+    private Long alerta;
     @Column(name = "PREFERENCIAS")
     private String preferencias;
 }
