@@ -1,4 +1,18 @@
 package gs.example.globalsolution.dto.configuracoesDTO;
 
-public record ConfiguracoesResponse() {
+import gs.example.globalsolution.model.usuario.Usuario;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
+
+import java.sql.Timestamp;
+
+public record ConfiguracoesResponse(
+        Long id,
+        Usuario usuario,
+        Timestamp corteInicio,
+        Timestamp corteFim,
+        Long alerta,
+        String preferencias
+) {
 }

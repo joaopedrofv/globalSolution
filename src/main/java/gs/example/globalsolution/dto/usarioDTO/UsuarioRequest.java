@@ -22,6 +22,5 @@ public record UsuarioRequest(
         String endereco,
         @PastOrPresent(message = "A data de criação deve estar no passado ou no presente.")
         Date dataCriacao
-
 ) {
 }

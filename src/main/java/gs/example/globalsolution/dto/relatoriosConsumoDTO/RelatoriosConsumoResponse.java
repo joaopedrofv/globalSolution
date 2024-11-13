@@ -1,4 +1,18 @@
 package gs.example.globalsolution.dto.relatoriosConsumoDTO;
 
-public record RelatoriosConsumoResponse() {
+import gs.example.globalsolution.model.usuario.Usuario;
+import jakarta.validation.constraints.*;
+
+import java.sql.Date;
+
+public record RelatoriosConsumoResponse(
+        Long id,
+        Usuario usuario,
+        Date periodoInicio,
+        Date periodoFim,
+        int totalConsumidoKWH,
+        int totalPago,
+        String analiseTexto,
+        Date dataCriacao
+) {
 }
