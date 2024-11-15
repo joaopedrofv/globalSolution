@@ -5,6 +5,7 @@ import gs.example.globalsolution.dto.pagamentosDTO.PagamentosResponse;
 import gs.example.globalsolution.model.pagamentos.Pagamentos;
 import gs.example.globalsolution.model.pagamentos.FormaPagamento;
 import gs.example.globalsolution.model.pagamentos.StatusPagamento;
+import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,14 +25,15 @@ public class PagamentosMapper {
     }
 
     // Mapper para converter Pagamentos para PagamentosResponse
-    public PagamentosResponse toResponse(Pagamentos pagamentos) {
+    public PagamentosResponse toResponse(Pagamentos pagamentos, Link link) {
         return new PagamentosResponse(
                 pagamentos.getId(),
                 pagamentos.getUsuario(),
                 pagamentos.getValor(),
                 pagamentos.getDataPagamento(),
                 pagamentos.getFormaPagamento(),
-                pagamentos.getStatusPagamento()
+                pagamentos.getStatusPagamento(),
+                link
         );
     }
 }

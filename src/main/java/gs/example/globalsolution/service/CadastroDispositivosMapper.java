@@ -4,6 +4,7 @@ import gs.example.globalsolution.dto.cadastroDispositivosDTO.CadastroDispositivo
 import gs.example.globalsolution.dto.cadastroDispositivosDTO.CadastroDispositivosResponse;
 import gs.example.globalsolution.model.cadastroDispositivos.CadastroDispositivos;
 import gs.example.globalsolution.model.usuario.Usuario;
+import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,12 +21,13 @@ public class CadastroDispositivosMapper {
     }
 
     // CadastroDispositivos para CadastroDispositivosResponse (DTO de resposta)
-    public CadastroDispositivosResponse cadastroDispositivosToResponseDTO(CadastroDispositivos cadastroDispositivos) {
+    public CadastroDispositivosResponse cadastroDispositivosToResponseDTO(CadastroDispositivos cadastroDispositivos, Link link) {
         return new CadastroDispositivosResponse(
                 cadastroDispositivos.getId(),
                 cadastroDispositivos.getUsuario(),
                 cadastroDispositivos.getTipoDispositivo(),
-                cadastroDispositivos.getDataInstalacao()
+                cadastroDispositivos.getDataInstalacao(),
+                link
         );
     }
 }

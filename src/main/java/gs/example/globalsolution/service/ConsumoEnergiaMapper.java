@@ -4,6 +4,7 @@ import gs.example.globalsolution.dto.consumoEnergiaDTO.ConsumoEnergiaRequest;
 import gs.example.globalsolution.dto.consumoEnergiaDTO.ConsumoEnergiaResponse;
 import gs.example.globalsolution.model.consumoEnergia.ConsumoEnergia;
 import gs.example.globalsolution.model.cadastroDispositivos.CadastroDispositivos;
+import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,13 +22,14 @@ public class ConsumoEnergiaMapper {
     }
 
     // Converte ConsumoEnergia (Modelo) para ConsumoEnergiaResponse (DTO de resposta)
-    public ConsumoEnergiaResponse consumoEnergiaToResponseDTO(ConsumoEnergia consumoEnergia) {
+    public ConsumoEnergiaResponse consumoEnergiaToResponseDTO(ConsumoEnergia consumoEnergia, Link link) {
         return new ConsumoEnergiaResponse(
                 consumoEnergia.getId(),
                 consumoEnergia.getDispositivos(),
                 consumoEnergia.getDataHora(),
                 consumoEnergia.getConsumoKWH(),
-                consumoEnergia.getPrecoKWH()
+                consumoEnergia.getPrecoKWH(),
+                link
         );
     }
 }

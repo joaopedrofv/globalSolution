@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import org.springframework.hateoas.Link;
 
 import java.sql.Date;
 
@@ -16,6 +17,7 @@ public record FaturasResponse(
         Integer valorTotal,
         Date dataVencimento,
         Date dataEmissao,
-        String statusFatura
+        String statusFatura,
+        Link link
 ) {
 }

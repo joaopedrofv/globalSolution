@@ -6,6 +6,7 @@ import gs.example.globalsolution.model.usuario.Usuario;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
+import org.springframework.hateoas.Link;
 
 import java.sql.Date;
 
@@ -15,6 +16,7 @@ public record PagamentosResponse(
         int valor,
         Date dataPagamento,
         FormaPagamento formaPagamento,
-        StatusPagamento statusPagamento
+        StatusPagamento statusPagamento,
+        Link link
 ) {
 }

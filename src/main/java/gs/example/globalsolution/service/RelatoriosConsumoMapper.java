@@ -3,6 +3,7 @@ package gs.example.globalsolution.service;
 import gs.example.globalsolution.dto.relatoriosConsumoDTO.RelatoriosConsumoRequest;
 import gs.example.globalsolution.dto.relatoriosConsumoDTO.RelatoriosConsumoResponse;
 import gs.example.globalsolution.model.relatoriosConsumo.RelatoriosConsumo;
+import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,7 +25,7 @@ public class RelatoriosConsumoMapper {
     }
 
     // Mapper para converter RelatoriosConsumo para RelatoriosConsumoResponse
-    public RelatoriosConsumoResponse toResponse(RelatoriosConsumo relatoriosConsumo) {
+    public RelatoriosConsumoResponse toResponse(RelatoriosConsumo relatoriosConsumo, Link link) {
         return new RelatoriosConsumoResponse(
                 relatoriosConsumo.getId(),
                 relatoriosConsumo.getUsuario(),
@@ -33,7 +34,8 @@ public class RelatoriosConsumoMapper {
                 relatoriosConsumo.getTotalConsumidoKWH(),
                 relatoriosConsumo.getTotalPago(),
                 relatoriosConsumo.getAnaliseTexto(),
-                relatoriosConsumo.getDataCriacao()
+                relatoriosConsumo.getDataCriacao(),
+                link
         );
     }
 }

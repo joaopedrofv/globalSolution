@@ -4,6 +4,7 @@ import gs.example.globalsolution.dto.notificacoesDTO.NotificacoesRequest;
 import gs.example.globalsolution.dto.notificacoesDTO.NotificacoesResponse;
 import gs.example.globalsolution.model.notificacoes.Notificacoes;
 import gs.example.globalsolution.model.notificacoes.TipoNotificacao;
+import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,14 +24,15 @@ public class NotificacoesMapper {
     }
 
     // Mapper para converter Notificacoes para NotificacoesResponse
-    public NotificacoesResponse toResponse(Notificacoes notificacoes) {
+    public NotificacoesResponse toResponse(Notificacoes notificacoes, Link link) {
         return new NotificacoesResponse(
                 notificacoes.getId(),
                 notificacoes.getUsuario(),
                 notificacoes.getMensagem(),
                 notificacoes.getTipo(),
                 notificacoes.getDataEnvio(),
-                notificacoes.getLeitura()
+                notificacoes.getLeitura(),
+                link
         );
     }
 }

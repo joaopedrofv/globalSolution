@@ -4,6 +4,7 @@ import gs.example.globalsolution.dto.faturasDTO.FaturasRequest;
 import gs.example.globalsolution.dto.faturasDTO.FaturasResponse;
 import gs.example.globalsolution.model.faturas.Faturas;
 import gs.example.globalsolution.model.faturas.StatusFatura;
+import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,7 +28,7 @@ public class FaturasMapper {
     }
 
     // Mapper para converter Faturas para FaturasResponse
-    public FaturasResponse toResponse(Faturas faturas) {
+    public FaturasResponse toResponse(Faturas faturas, Link link) {
         return new FaturasResponse(
                 faturas.getId(),
                 faturas.getUsuario(),
@@ -35,7 +36,8 @@ public class FaturasMapper {
                 faturas.getValorTotal(),
                 faturas.getDataVencimento(),
                 faturas.getDataEmissao(),
-                faturas.getStatusFatura().getDescricao() // Usando a descrição do enum
+                faturas.getStatusFatura().getDescricao(),
+                link
         );
     }
 }

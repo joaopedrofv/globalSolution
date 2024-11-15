@@ -2,6 +2,7 @@ package gs.example.globalsolution.dto.relatoriosConsumoDTO;
 
 import gs.example.globalsolution.model.usuario.Usuario;
 import jakarta.validation.constraints.*;
+import org.springframework.hateoas.Link;
 
 import java.sql.Date;
 
@@ -13,6 +14,7 @@ public record RelatoriosConsumoResponse(
         int totalConsumidoKWH,
         int totalPago,
         String analiseTexto,
-        Date dataCriacao
+        Date dataCriacao,
+        Link link
 ) {
 }

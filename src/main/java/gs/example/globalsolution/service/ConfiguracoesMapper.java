@@ -4,6 +4,7 @@ import gs.example.globalsolution.dto.configuracoesDTO.ConfiguracoesRequest;
 import gs.example.globalsolution.dto.configuracoesDTO.ConfiguracoesResponse;
 import gs.example.globalsolution.model.configuracoes.Configuracoes;
 import gs.example.globalsolution.model.usuario.Usuario;
+import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,14 +23,15 @@ public class ConfiguracoesMapper {
     }
 
     // Configuracoes (Modelo) para ConfiguracoesResponse (DTO de Resposta)
-    public ConfiguracoesResponse configuracoesToResponseDTO(Configuracoes configuracoes) {
+    public ConfiguracoesResponse configuracoesToResponseDTO(Configuracoes configuracoes, Link link) {
         return new ConfiguracoesResponse(
                 configuracoes.getId(),
                 configuracoes.getUsuario(),
                 configuracoes.getCorteInicio(),
                 configuracoes.getCorteFim(),
                 configuracoes.getAlerta(),
-                configuracoes.getPreferencias()
+                configuracoes.getPreferencias(),
+                link
         );
     }
 }
