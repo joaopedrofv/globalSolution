@@ -46,11 +46,11 @@ public class CadastroDispositivosController {
         if (dispositivosRepository.existsById(request.id())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        CadastroDispositivos dispositivo = dispositivosMapper.requestToEntity(request);
+        CadastroDispositivos dispositivo = dispositivosMapper.requestToCadastroDispositivos(request);
         CadastroDispositivos salvo = dispositivosRepository.save(dispositivo);
 
         Link selfLink = linkTo(methodOn(CadastroDispositivosController.class).read(salvo.getId())).withSelfRel();
-        CadastroDispositivosResponse response = dispositivosMapper.entityToResponse(salvo, selfLink);
+        CadastroDispositivosResponse response = dispositivosMapper.cadastroDispositivosToResponseDTO(salvo, selfLink);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -70,7 +70,7 @@ public class CadastroDispositivosController {
         List<CadastroDispositivosResponse> responses = new ArrayList<>();
         for (CadastroDispositivos dispositivo : dispositivos) {
             Link selfLink = linkTo(methodOn(CadastroDispositivosController.class).read(dispositivo.getId())).withSelfRel();
-            responses.add(dispositivosMapper.entityToResponse(dispositivo, selfLink));
+            responses.add(dispositivosMapper.cadastroDispositivosToResponseDTO(dispositivo, selfLink));
         }
 
         return ResponseEntity.ok(responses);
@@ -89,7 +89,7 @@ public class CadastroDispositivosController {
         }
 
         Link selfLink = linkTo(methodOn(CadastroDispositivosController.class).read(id)).withSelfRel();
-        CadastroDispositivosResponse response = dispositivosMapper.entityToResponse(dispositivo.get(), selfLink);
+        CadastroDispositivosResponse response = dispositivosMapper.cadastroDispositivosToResponseDTO(dispositivo.get(), selfLink);
 
         return ResponseEntity.ok(response);
     }
@@ -108,12 +108,12 @@ public class CadastroDispositivosController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        CadastroDispositivos dispositivo = dispositivosMapper.requestToEntity(request);
+        CadastroDispositivos dispositivo = dispositivosMapper.requestToCadastroDispositivos(request);
         dispositivo.setId(id); // Garante a atualização do registro existente
         CadastroDispositivos atualizado = dispositivosRepository.save(dispositivo);
 
         Link selfLink = linkTo(methodOn(CadastroDispositivosController.class).read(id)).withSelfRel();
-        CadastroDispositivosResponse response = dispositivosMapper.entityToResponse(atualizado, selfLink);
+        CadastroDispositivosResponse response = dispositivosMapper.cadastroDispositivosToResponseDTO(atualizado, selfLink);
 
         return ResponseEntity.ok(response);
     }
