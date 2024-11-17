@@ -13,6 +13,7 @@ import java.sql.Date;
 @Data
 public class Usuario {
     @Id
+    @Column(name = "ID_USUARIO")
     private long id;
     @Column(name = "NOME")
     private String nome;

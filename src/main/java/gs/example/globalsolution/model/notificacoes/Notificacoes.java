@@ -11,6 +11,7 @@ import java.sql.Date;
 @Data
 public class Notificacoes {
     @Id
+    @Column(name = "ID_NOTIFICACAO")
     private long id;
     @ManyToOne
     @JoinColumn(name = "ID_USUARIO")

@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 @Data
 public class Configuracoes {
     @Id
+    @Column(name = "ID_CONFIGURACOES")
     private long id;
     @ManyToOne
     @JoinColumn(name = "ID_USUARIO")

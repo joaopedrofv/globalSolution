@@ -12,6 +12,7 @@ import java.sql.Date;
 @Data
 public class Faturas {
     @Id
+    @Column(name = "ID_FATURA")
     private long id;
     @ManyToOne
     @JoinColumn(name = "ID_USUARIO")

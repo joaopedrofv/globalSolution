@@ -11,11 +11,12 @@ import java.sql.Date;
 @Data
 public class CadastroDispositivos {
     @Id
+    @Column(name = "ID_DISPOSITIVO")
     private long id;
     @ManyToOne
     @JoinColumn(name = "ID_USUARIO")
     private Usuario usuario;
-    @Column(name = "TIPO_DISPOSITVO")
+    @Column(name = "TIPO_DISPOSITIVO")
     private String tipoDispositivo;
     @Column(name = "DATA_INSTALACAO")
     private Date dataInstalacao;

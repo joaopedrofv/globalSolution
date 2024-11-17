@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 @Data
 public class StatusDispositivos {
     @Id
+    @Column(name = "ID_STATUS")
     private long id;
     @ManyToOne
     @JoinColumn(name = "ID_DISPOSITIVO")

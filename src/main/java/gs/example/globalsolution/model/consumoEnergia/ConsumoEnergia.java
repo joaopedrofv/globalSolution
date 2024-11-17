@@ -11,6 +11,7 @@ import java.sql.Date;
 @Data
 public class ConsumoEnergia {
     @Id
+    @Column(name = "ID_CONSUMO")
     private long id;
     @ManyToOne
     @JoinColumn(name = "ID_DISPOSITIVO")
