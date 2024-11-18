@@ -25,7 +25,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(value = "/statusDispositivos", produces = {"application/json"})
-@Tag(name = "api-statusDispositivos")
+@Tag(name = "Status de Dispositivos", description = "Operações relacionadas aos status dos dispositivos.")
 public class StatusDispositivosController {
 
     @Autowired
@@ -33,7 +33,8 @@ public class StatusDispositivosController {
     @Autowired
     private StatusDispositivosMapper statusDispositivosMapper;
 
-    @Operation(summary = "Cria um novo status para o dispositivo.")
+    @Operation(summary = "Criar status para o dispositivo.",
+    description = "Cria um novo status para o dispositivo de acordo com os dados proferidos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Status do dispositivo criado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.")
@@ -52,7 +53,8 @@ public class StatusDispositivosController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Busca todos os status dos dispositivos.")
+    @Operation(summary = "Buscar todos status dos dispositivos.",
+    description = "Busca todos os status de dispositios existentes.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Nenhum status encontrado."),
             @ApiResponse(responseCode = "200", description = "Lista de status retornada com sucesso!")
@@ -73,7 +75,8 @@ public class StatusDispositivosController {
         return ResponseEntity.ok(responses);
     }
 
-    @Operation(summary = "Busca um status do dispositivo por ID.")
+    @Operation(summary = "Buscar status de dispositivo.",
+    description = "Busca um status de dispositivo existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Status não encontrado."),
             @ApiResponse(responseCode = "200", description = "Status encontrado com sucesso!")
@@ -91,7 +94,8 @@ public class StatusDispositivosController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Atualiza um status de dispositivo existente.")
+    @Operation(summary = "Atualizar status de dispositivo.",
+    description = "Atualiza um status de dispositivo existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Status não encontrado."),
             @ApiResponse(responseCode = "200", description = "Status atualizado com sucesso!")
@@ -115,7 +119,8 @@ public class StatusDispositivosController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Exclui um status de dispositivo.")
+    @Operation(summary = "Excluir status de dispositivo.",
+    description = "Exclui um status de dispositivo existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Status não encontrado."),
             @ApiResponse(responseCode = "200", description = "Status excluído com sucesso!")

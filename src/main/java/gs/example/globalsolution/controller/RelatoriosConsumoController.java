@@ -25,7 +25,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(value = "/relatoriosConsumo", produces = {"application/json"})
-@Tag(name = "api-relatoriosConsumo")
+@Tag(name = "Relatórios de consumo", description = "Operações relacionadas a relatórios de consumo de energia.")
 public class RelatoriosConsumoController {
 
     @Autowired
@@ -33,7 +33,8 @@ public class RelatoriosConsumoController {
     @Autowired
     private RelatoriosConsumoMapper relatoriosConsumoMapper;
 
-    @Operation(summary = "Cria um novo relatório de consumo.")
+    @Operation(summary = "Criar relatório de consumo.",
+    description = "Cria um novo relatório de consumo de acordo com os dados proferidos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Relatório de consumo criado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.")
@@ -52,7 +53,8 @@ public class RelatoriosConsumoController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Busca todos os relatórios de consumo.")
+    @Operation(summary = "Buscar todos relatórios de consumo.",
+    description = "Busca todos os relatórios de consumo existentes.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Nenhum relatório encontrado."),
             @ApiResponse(responseCode = "200", description = "Lista de relatórios retornada com sucesso!")
@@ -73,7 +75,8 @@ public class RelatoriosConsumoController {
         return ResponseEntity.ok(responses);
     }
 
-    @Operation(summary = "Busca um relatório de consumo por ID.")
+    @Operation(summary = "Buscar relatório de consumo.",
+    description = "Busca um relatório de consumo existente de acordo com o ID associado")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Relatório não encontrado."),
             @ApiResponse(responseCode = "200", description = "Relatório encontrado com sucesso!")
@@ -91,7 +94,8 @@ public class RelatoriosConsumoController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Atualiza um relatório de consumo existente.")
+    @Operation(summary = "Atualizar relatório de consumo.",
+    description = "Atualiza um relatório de consumo existente de acordo com ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Relatório não encontrado."),
             @ApiResponse(responseCode = "200", description = "Relatório atualizado com sucesso!")
@@ -115,7 +119,8 @@ public class RelatoriosConsumoController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Exclui um relatório de consumo.")
+    @Operation(summary = "Excluir relatório de consumo.",
+    description = "Exclui um relatório de consumo existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Relatório não encontrado."),
             @ApiResponse(responseCode = "200", description = "Relatório excluído com sucesso!")

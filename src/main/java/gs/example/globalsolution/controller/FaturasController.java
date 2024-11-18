@@ -27,7 +27,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(value = "/faturas", produces = {"application/json"})
-@Tag(name = "api-faturas")
+@Tag(name = "Faturas", description = "Operações relacionadas a faturas.")
 public class FaturasController {
 
     @Autowired
@@ -35,7 +35,8 @@ public class FaturasController {
     @Autowired
     private FaturasMapper faturasMapper;
 
-    @Operation(summary = "Cria uma nova fatura.")
+    @Operation(summary = "Criar nova fatura.",
+    description = "Cria uma nova fatura de acordo com os dados proferidos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Fatura criada com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.",
@@ -55,7 +56,8 @@ public class FaturasController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Busca todas as faturas.")
+    @Operation(summary = "Buscar todas faturas.",
+    description = "Busca todas as faturas existentes.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Nenhuma fatura encontrada."),
             @ApiResponse(responseCode = "200", description = "Lista de faturas retornada com sucesso!")
@@ -76,7 +78,8 @@ public class FaturasController {
         return ResponseEntity.ok(responses);
     }
 
-    @Operation(summary = "Busca uma fatura por ID.")
+    @Operation(summary = "Buscar fatura.",
+    description = "Busca uma fatura existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Fatura não encontrada."),
             @ApiResponse(responseCode = "200", description = "Fatura encontrada com sucesso!")
@@ -94,7 +97,8 @@ public class FaturasController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Atualiza uma fatura existente.")
+    @Operation(summary = "Atualizar fatura.",
+    description = "Atualiza uma fatura existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Fatura não encontrada."),
             @ApiResponse(responseCode = "200", description = "Fatura atualizada com sucesso!")
@@ -118,7 +122,8 @@ public class FaturasController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Exclui uma fatura.")
+    @Operation(summary = "Excluir fatura.",
+    description = "Exclui uma fatura existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Fatura não encontrada."),
             @ApiResponse(responseCode = "200", description = "Fatura excluída com sucesso!")

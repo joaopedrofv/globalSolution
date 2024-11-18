@@ -27,7 +27,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(value = "/consumo-energia", produces = {"application/json"})
-@Tag(name = "api-consumo-energia")
+@Tag(name = "Consumo de Energia", description = "Operações relacionadas a registros de consumo de energia.")
 public class ConsumoEnergiaController {
 
     @Autowired
@@ -35,7 +35,8 @@ public class ConsumoEnergiaController {
     @Autowired
     private ConsumoEnergiaMapper consumoEnergiaMapper;
 
-    @Operation(summary = "Cria um novo registro de consumo de energia.")
+    @Operation(summary = "Criar registro de consumo.",
+    description = "Cria um registro de consumo de energia de acordo com os dados proferidos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Consumo de energia criado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.",
@@ -55,7 +56,8 @@ public class ConsumoEnergiaController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Busca todos os registros de consumo de energia.")
+    @Operation(summary = "Buscar todos registros de consumo.",
+    description = "Busca todos os registros de consumo de energia existentes.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Nenhum registro de consumo de energia encontrado."),
             @ApiResponse(responseCode = "200", description = "Lista de consumos de energia retornada com sucesso!")
@@ -76,7 +78,8 @@ public class ConsumoEnergiaController {
         return ResponseEntity.ok(responses);
     }
 
-    @Operation(summary = "Busca um consumo de energia por ID.")
+    @Operation(summary = "Buscar registro de consumo.",
+    description = "Busca um registro de consumo de energia existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Consumo de energia não encontrado."),
             @ApiResponse(responseCode = "200", description = "Consumo de energia encontrado com sucesso!")
@@ -94,7 +97,8 @@ public class ConsumoEnergiaController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Atualiza um consumo de energia existente.")
+    @Operation(summary = "Atualizar registro de consumo.",
+    description = "Atualiza um registro de consumo de energia existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Consumo de energia não encontrado."),
             @ApiResponse(responseCode = "200", description = "Consumo de energia atualizado com sucesso!")
@@ -118,7 +122,8 @@ public class ConsumoEnergiaController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Exclui um consumo de energia.")
+    @Operation(summary = "Excluir um consumo de energia.",
+    description = "Exclui um registro de consumo de energia de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Consumo de energia não encontrado."),
             @ApiResponse(responseCode = "200", description = "Consumo de energia excluído com sucesso!")

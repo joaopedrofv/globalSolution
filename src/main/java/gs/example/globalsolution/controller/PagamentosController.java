@@ -25,7 +25,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(value = "/pagamentos", produces = {"application/json"})
-@Tag(name = "api-pagamentos")
+@Tag(name = "Pagamentos", description = "Operações relacionadas a pagamentos de faturas.")
 public class PagamentosController {
 
     @Autowired
@@ -33,7 +33,8 @@ public class PagamentosController {
     @Autowired
     private PagamentosMapper pagamentosMapper;
 
-    @Operation(summary = "Cria um novo pagamento.")
+    @Operation(summary = "Criar pagamento.",
+    description = "Cria um novo pagamento de acordo com os dados proferidos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Pagamento criado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.")
@@ -52,7 +53,8 @@ public class PagamentosController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Busca todos os pagamentos.")
+    @Operation(summary = "Buscar todos pagamentos.",
+    description = "Busca todos os pagamentos existentes")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Nenhum pagamento encontrado."),
             @ApiResponse(responseCode = "200", description = "Lista de pagamentos retornada com sucesso!")
@@ -73,7 +75,8 @@ public class PagamentosController {
         return ResponseEntity.ok(responses);
     }
 
-    @Operation(summary = "Busca um pagamento por ID.")
+    @Operation(summary = "Buscar pagamento.",
+    description = "Busca um pagamento existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Pagamento não encontrado."),
             @ApiResponse(responseCode = "200", description = "Pagamento encontrado com sucesso!")
@@ -91,7 +94,8 @@ public class PagamentosController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Atualiza um pagamento existente.")
+    @Operation(summary = "Atualizar pagamento.",
+    description = "Atualiza um pagamento existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Pagamento não encontrado."),
             @ApiResponse(responseCode = "200", description = "Pagamento atualizado com sucesso!")
@@ -115,7 +119,8 @@ public class PagamentosController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Exclui um pagamento.")
+    @Operation(summary = "Excluir pagamento.",
+    description = "Exclui um pagamento existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Pagamento não encontrado."),
             @ApiResponse(responseCode = "200", description = "Pagamento excluído com sucesso!")

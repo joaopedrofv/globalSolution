@@ -25,7 +25,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(value = "/notificacoes", produces = {"application/json"})
-@Tag(name = "api-notificacoes")
+@Tag(name = "Notificações", description = "Operações relacionadas a notificações do sistema.")
 public class NotificacoesController {
 
     @Autowired
@@ -33,7 +33,8 @@ public class NotificacoesController {
     @Autowired
     private NotificacoesMapper notificacoesMapper;
 
-    @Operation(summary = "Cria uma nova notificação.")
+    @Operation(summary = "Criar notificação.",
+    description = "Cria uma nova notificação de acordo com os dados proferidos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Notificação criada com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.")
@@ -52,7 +53,8 @@ public class NotificacoesController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Busca todas as notificações.")
+    @Operation(summary = "Buscar todas notificações.",
+    description = "Busca todas as notificações existentes.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Nenhuma notificação encontrada."),
             @ApiResponse(responseCode = "200", description = "Lista de notificações retornada com sucesso!")
@@ -73,7 +75,8 @@ public class NotificacoesController {
         return ResponseEntity.ok(responses);
     }
 
-    @Operation(summary = "Busca uma notificação por ID.")
+    @Operation(summary = "Buscar notificação.",
+    description = "Busca uma notificação existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Notificação não encontrada."),
             @ApiResponse(responseCode = "200", description = "Notificação encontrada com sucesso!")
@@ -91,7 +94,8 @@ public class NotificacoesController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Atualiza uma notificação existente.")
+    @Operation(summary = "Atualizar notificação.",
+    description = "Atualiza uma notificação existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Notificação não encontrada."),
             @ApiResponse(responseCode = "200", description = "Notificação atualizada com sucesso!")
@@ -115,7 +119,8 @@ public class NotificacoesController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Exclui uma notificação.")
+    @Operation(summary = "Excluir notificação.",
+    description = "Exclui uma notificação existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Notificação não encontrada."),
             @ApiResponse(responseCode = "200", description = "Notificação excluída com sucesso!")

@@ -25,7 +25,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(value = "/usuarios", produces = {"application/json"})
-@Tag(name = "api-usuarios")
+@Tag(name = "Usuários", description = "Operações relacionadas a usuários.")
 public class UsuarioController {
 
     @Autowired
@@ -33,7 +33,8 @@ public class UsuarioController {
     @Autowired
     private UsuarioMapper usuarioMapper;
 
-    @Operation(summary = "Cria um novo usuário.")
+    @Operation(summary = "Criar novo usuário.",
+    description = "Cria um novo usuário de acordo com os dados proferidos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Usuário criado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.")
@@ -52,7 +53,8 @@ public class UsuarioController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Busca todos os usuários.")
+    @Operation(summary = "Buscar todos usuários.",
+    description = "Busca todos os usuários existentes")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Nenhum usuário encontrado."),
             @ApiResponse(responseCode = "200", description = "Lista de usuários retornada com sucesso!")
@@ -73,7 +75,8 @@ public class UsuarioController {
         return ResponseEntity.ok(responses);
     }
 
-    @Operation(summary = "Busca um usuário por ID.")
+    @Operation(summary = "Buscar usuário.",
+    description = "Busca um usuário existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado."),
             @ApiResponse(responseCode = "200", description = "Usuário encontrado com sucesso!")
@@ -91,7 +94,8 @@ public class UsuarioController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Atualiza um usuário existente.")
+    @Operation(summary = "Atualizar usuário.",
+    description = "Atualiza um usuário existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado."),
             @ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso!")
@@ -115,7 +119,8 @@ public class UsuarioController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Exclui um usuário.")
+    @Operation(summary = "Excluir usuário.",
+    description = "Exclui um usuário existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado."),
             @ApiResponse(responseCode = "200", description = "Usuário excluído com sucesso!")

@@ -25,9 +25,9 @@ import java.util.Optional;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+@Tag(name = "Dispositivos", description = "Operações relacionadas a dispositivos.")
 @RestController
 @RequestMapping(value = "/dispositivos", produces = {"application/json"})
-@Tag(name = "api-dispositivos")
 public class CadastroDispositivosController {
 
     @Autowired
@@ -35,7 +35,8 @@ public class CadastroDispositivosController {
     @Autowired
     private CadastroDispositivosMapper dispositivosMapper;
 
-    @Operation(summary = "Cria um cadastro de dispositivo.")
+    @Operation(summary = "Criar dipositivo.",
+    description = "Cria um dispositivo de acordo com os dados fornecidos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Cadastro criado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.",
@@ -55,7 +56,8 @@ public class CadastroDispositivosController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Busca todos os dispositivos cadastrados.")
+    @Operation(summary = "Buscar dispositivos.",
+    description = "Busca todos os dispositivos existentes.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Nenhum dispositivo encontrado."),
             @ApiResponse(responseCode = "200", description = "Lista de dispositivos retornada com sucesso!")
@@ -76,7 +78,8 @@ public class CadastroDispositivosController {
         return ResponseEntity.ok(responses);
     }
 
-    @Operation(summary = "Busca um dispositivo por ID.")
+    @Operation(summary = "Buscar dispositivo",
+    description = "Busca um dispositivo existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Dispositivo não encontrado."),
             @ApiResponse(responseCode = "200", description = "Dispositivo encontrado com sucesso!")
@@ -94,7 +97,8 @@ public class CadastroDispositivosController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Atualiza um dispositivo existente.")
+    @Operation(summary = "Atualizar dispositivo.",
+    description = "Atualiza um dispositivo existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Dispositivo não encontrado."),
             @ApiResponse(responseCode = "200", description = "Dispositivo atualizado com sucesso!")
@@ -118,7 +122,8 @@ public class CadastroDispositivosController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Exclui um dispositivo.")
+    @Operation(summary = "Excluir dispositivo.",
+    description = "Exclui um dispositivo existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Dispositivo não encontrado."),
             @ApiResponse(responseCode = "200", description = "Dispositivo excluído com sucesso!")

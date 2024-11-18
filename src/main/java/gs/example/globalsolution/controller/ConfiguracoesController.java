@@ -27,7 +27,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(value = "/configuracoes", produces = {"application/json"})
-@Tag(name = "api-configuracoes")
+@Tag(name = "Configurações", description = "Operações relacionadas a configurações de dispositivos.")
 public class ConfiguracoesController {
 
     @Autowired
@@ -35,7 +35,8 @@ public class ConfiguracoesController {
     @Autowired
     private ConfiguracoesMapper configuracoesMapper;
 
-    @Operation(summary = "Cria um novo registro de configurações.")
+    @Operation(summary = "Criar configuração de dispositivo.",
+    description = "Cria um novo registro de configuração de acordo com os dados fornecidos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Configuração criada com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.",
@@ -55,7 +56,8 @@ public class ConfiguracoesController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Busca todas as configurações cadastradas.")
+    @Operation(summary = "Buscar todas configurações.",
+    description = "Busca todas informações de dispositivos existentes.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Nenhuma configuração encontrada."),
             @ApiResponse(responseCode = "200", description = "Lista de configurações retornada com sucesso!")
@@ -76,7 +78,8 @@ public class ConfiguracoesController {
         return ResponseEntity.ok(responses);
     }
 
-    @Operation(summary = "Busca uma configuração por ID.")
+    @Operation(summary = "Buscar configuração.",
+    description = "Busca uma configuração de dispositivo existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Configuração não encontrada."),
             @ApiResponse(responseCode = "200", description = "Configuração encontrada com sucesso!")
@@ -94,7 +97,8 @@ public class ConfiguracoesController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Atualiza uma configuração existente.")
+    @Operation(summary = "Atualizar configuração.",
+    description = "Atualiza a configuração de um dispositivo existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Configuração não encontrada."),
             @ApiResponse(responseCode = "200", description = "Configuração atualizada com sucesso!")
@@ -118,7 +122,8 @@ public class ConfiguracoesController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "Exclui uma configuração.")
+    @Operation(summary = "Excluir configuração.",
+    description = "Exclui uma configuração de dispositivo existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Configuração não encontrada."),
             @ApiResponse(responseCode = "200", description = "Configuração excluída com sucesso!")
