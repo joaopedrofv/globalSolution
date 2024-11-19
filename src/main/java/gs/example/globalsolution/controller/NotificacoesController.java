@@ -11,6 +11,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +37,7 @@ public class NotificacoesController {
     private NotificacoesMapper notificacoesMapper;
 
     @Operation(summary = "Criar notificação.",
-    description = "Cria uma nova notificação de acordo com os dados proferidos.")
+            description = "Cria uma nova notificação de acordo com os dados proferidos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Notificação criada com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.")
@@ -54,20 +57,23 @@ public class NotificacoesController {
     }
 
     @Operation(summary = "Buscar todas notificações.",
-    description = "Busca todas as notificações existentes.")
+            description = "Busca todas as notificações existentes.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Nenhuma notificação encontrada."),
             @ApiResponse(responseCode = "200", description = "Lista de notificações retornada com sucesso!")
     })
     @GetMapping
-    public ResponseEntity<List<NotificacoesResponse>> readAll() {
-        List<Notificacoes> notificacoes = notificacoesRepository.findAll();
-        if (notificacoes.isEmpty()) {
+    public ResponseEntity<List<NotificacoesResponse>> readAll(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                              @RequestParam(value = "size", defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Notificacoes> notificacoesPage = notificacoesRepository.findAll(pageable);
+
+        if (notificacoesPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
         List<NotificacoesResponse> responses = new ArrayList<>();
-        for (Notificacoes notificacao : notificacoes) {
+        for (Notificacoes notificacao : notificacoesPage.getContent()) {
             Link selfLink = linkTo(methodOn(NotificacoesController.class).read(notificacao.getId())).withSelfRel();
             responses.add(notificacoesMapper.toResponse(notificacao, selfLink));
         }
@@ -76,7 +82,7 @@ public class NotificacoesController {
     }
 
     @Operation(summary = "Buscar notificação.",
-    description = "Busca uma notificação existente de acordo com o ID associado.")
+            description = "Busca uma notificação existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Notificação não encontrada."),
             @ApiResponse(responseCode = "200", description = "Notificação encontrada com sucesso!")
@@ -95,7 +101,7 @@ public class NotificacoesController {
     }
 
     @Operation(summary = "Atualizar notificação.",
-    description = "Atualiza uma notificação existente de acordo com o ID associado.")
+            description = "Atualiza uma notificação existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Notificação não encontrada."),
             @ApiResponse(responseCode = "200", description = "Notificação atualizada com sucesso!")
@@ -120,7 +126,7 @@ public class NotificacoesController {
     }
 
     @Operation(summary = "Excluir notificação.",
-    description = "Exclui uma notificação existente de acordo com o ID associado.")
+            description = "Exclui uma notificação existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Notificação não encontrada."),
             @ApiResponse(responseCode = "200", description = "Notificação excluída com sucesso!")

@@ -13,6 +13,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,27 +59,34 @@ public class CadastroDispositivosController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Buscar dispositivos.",
-    description = "Busca todos os dispositivos existentes.")
+    @Operation(summary = "Buscar dispositivos paginados.",
+            description = "Busca dispositivos existentes com paginação.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Nenhum dispositivo encontrado."),
             @ApiResponse(responseCode = "200", description = "Lista de dispositivos retornada com sucesso!")
     })
     @GetMapping
-    public ResponseEntity<List<CadastroDispositivosResponse>> readAll() {
-        List<CadastroDispositivos> dispositivos = dispositivosRepository.findAll();
-        if (dispositivos.isEmpty()) {
+    public ResponseEntity<List<CadastroDispositivosResponse>> readAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size); // Cria um Pageable com base nos parâmetros page e size
+        Page<CadastroDispositivos> dispositivosPage = dispositivosRepository.findAll(pageable);
+
+        if (dispositivosPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
         List<CadastroDispositivosResponse> responses = new ArrayList<>();
-        for (CadastroDispositivos dispositivo : dispositivos) {
+        for (CadastroDispositivos dispositivo : dispositivosPage) {
             Link selfLink = linkTo(methodOn(CadastroDispositivosController.class).read(dispositivo.getId())).withSelfRel();
             responses.add(dispositivosMapper.cadastroDispositivosToResponseDTO(dispositivo, selfLink));
         }
 
         return ResponseEntity.ok(responses);
     }
+
+
 
     @Operation(summary = "Buscar dispositivo",
     description = "Busca um dispositivo existente de acordo com o ID associado.")

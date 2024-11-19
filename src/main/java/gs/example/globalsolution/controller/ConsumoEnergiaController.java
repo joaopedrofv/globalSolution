@@ -14,6 +14,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +39,7 @@ public class ConsumoEnergiaController {
     private ConsumoEnergiaMapper consumoEnergiaMapper;
 
     @Operation(summary = "Criar registro de consumo.",
-    description = "Cria um registro de consumo de energia de acordo com os dados proferidos.")
+            description = "Cria um registro de consumo de energia de acordo com os dados proferidos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Consumo de energia criado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.",
@@ -57,20 +60,23 @@ public class ConsumoEnergiaController {
     }
 
     @Operation(summary = "Buscar todos registros de consumo.",
-    description = "Busca todos os registros de consumo de energia existentes.")
+            description = "Busca todos os registros de consumo de energia existentes.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Nenhum registro de consumo de energia encontrado."),
             @ApiResponse(responseCode = "200", description = "Lista de consumos de energia retornada com sucesso!")
     })
     @GetMapping
-    public ResponseEntity<List<ConsumoEnergiaResponse>> readAll() {
-        List<ConsumoEnergia> consumos = consumoEnergiaRepository.findAll();
-        if (consumos.isEmpty()) {
+    public ResponseEntity<List<ConsumoEnergiaResponse>> readAll(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                                @RequestParam(value = "size", defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ConsumoEnergia> consumosPage = consumoEnergiaRepository.findAll(pageable);
+
+        if (consumosPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
         List<ConsumoEnergiaResponse> responses = new ArrayList<>();
-        for (ConsumoEnergia consumo : consumos) {
+        for (ConsumoEnergia consumo : consumosPage.getContent()) {
             Link selfLink = linkTo(methodOn(ConsumoEnergiaController.class).read(consumo.getId())).withSelfRel();
             responses.add(consumoEnergiaMapper.consumoEnergiaToResponseDTO(consumo, selfLink));
         }
@@ -79,7 +85,7 @@ public class ConsumoEnergiaController {
     }
 
     @Operation(summary = "Buscar registro de consumo.",
-    description = "Busca um registro de consumo de energia existente de acordo com o ID associado.")
+            description = "Busca um registro de consumo de energia existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Consumo de energia não encontrado."),
             @ApiResponse(responseCode = "200", description = "Consumo de energia encontrado com sucesso!")
@@ -98,7 +104,7 @@ public class ConsumoEnergiaController {
     }
 
     @Operation(summary = "Atualizar registro de consumo.",
-    description = "Atualiza um registro de consumo de energia existente de acordo com o ID associado.")
+            description = "Atualiza um registro de consumo de energia existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Consumo de energia não encontrado."),
             @ApiResponse(responseCode = "200", description = "Consumo de energia atualizado com sucesso!")
@@ -123,7 +129,7 @@ public class ConsumoEnergiaController {
     }
 
     @Operation(summary = "Excluir um consumo de energia.",
-    description = "Exclui um registro de consumo de energia de acordo com o ID associado.")
+            description = "Exclui um registro de consumo de energia de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Consumo de energia não encontrado."),
             @ApiResponse(responseCode = "200", description = "Consumo de energia excluído com sucesso!")

@@ -11,6 +11,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +37,7 @@ public class UsuarioController {
     private UsuarioMapper usuarioMapper;
 
     @Operation(summary = "Criar novo usuário.",
-    description = "Cria um novo usuário de acordo com os dados proferidos.")
+            description = "Cria um novo usuário de acordo com os dados proferidos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Usuário criado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.")
@@ -54,20 +57,25 @@ public class UsuarioController {
     }
 
     @Operation(summary = "Buscar todos usuários.",
-    description = "Busca todos os usuários existentes")
+            description = "Busca todos os usuários existentes com paginação.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Nenhum usuário encontrado."),
             @ApiResponse(responseCode = "200", description = "Lista de usuários retornada com sucesso!")
     })
     @GetMapping
-    public ResponseEntity<List<UsuarioResponse>> readAll() {
-        List<Usuario> usuarios = usuarioRepository.findAll();
-        if (usuarios.isEmpty()) {
+    public ResponseEntity<List<UsuarioResponse>> readAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Usuario> usuariosPage = usuarioRepository.findAll(pageable);
+
+        if (usuariosPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
         List<UsuarioResponse> responses = new ArrayList<>();
-        for (Usuario usuario : usuarios) {
+        for (Usuario usuario : usuariosPage) {
             Link selfLink = linkTo(methodOn(UsuarioController.class).read(usuario.getId())).withSelfRel();
             responses.add(usuarioMapper.toResponse(usuario, selfLink));
         }
@@ -76,7 +84,7 @@ public class UsuarioController {
     }
 
     @Operation(summary = "Buscar usuário.",
-    description = "Busca um usuário existente de acordo com o ID associado.")
+            description = "Busca um usuário existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado."),
             @ApiResponse(responseCode = "200", description = "Usuário encontrado com sucesso!")
@@ -95,7 +103,7 @@ public class UsuarioController {
     }
 
     @Operation(summary = "Atualizar usuário.",
-    description = "Atualiza um usuário existente de acordo com o ID associado.")
+            description = "Atualiza um usuário existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado."),
             @ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso!")
@@ -120,7 +128,7 @@ public class UsuarioController {
     }
 
     @Operation(summary = "Excluir usuário.",
-    description = "Exclui um usuário existente de acordo com o ID associado.")
+            description = "Exclui um usuário existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado."),
             @ApiResponse(responseCode = "200", description = "Usuário excluído com sucesso!")

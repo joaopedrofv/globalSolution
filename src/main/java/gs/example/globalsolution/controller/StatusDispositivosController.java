@@ -11,6 +11,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +37,7 @@ public class StatusDispositivosController {
     private StatusDispositivosMapper statusDispositivosMapper;
 
     @Operation(summary = "Criar status para o dispositivo.",
-    description = "Cria um novo status para o dispositivo de acordo com os dados proferidos.")
+            description = "Cria um novo status para o dispositivo de acordo com os dados proferidos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Status do dispositivo criado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.")
@@ -54,20 +57,25 @@ public class StatusDispositivosController {
     }
 
     @Operation(summary = "Buscar todos status dos dispositivos.",
-    description = "Busca todos os status de dispositios existentes.")
+            description = "Busca todos os status de dispositios existentes.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Nenhum status encontrado."),
             @ApiResponse(responseCode = "200", description = "Lista de status retornada com sucesso!")
     })
     @GetMapping
-    public ResponseEntity<List<StatusDispositivosResponse>> readAll() {
-        List<StatusDispositivos> statusDispositivos = statusDispositivosRepository.findAll();
-        if (statusDispositivos.isEmpty()) {
+    public ResponseEntity<List<StatusDispositivosResponse>> readAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<StatusDispositivos> statusDispositivosPage = statusDispositivosRepository.findAll(pageable);
+
+        if (statusDispositivosPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
         List<StatusDispositivosResponse> responses = new ArrayList<>();
-        for (StatusDispositivos status : statusDispositivos) {
+        for (StatusDispositivos status : statusDispositivosPage) {
             Link selfLink = linkTo(methodOn(StatusDispositivosController.class).read(status.getId())).withSelfRel();
             responses.add(statusDispositivosMapper.toResponse(status, selfLink));
         }
@@ -76,7 +84,7 @@ public class StatusDispositivosController {
     }
 
     @Operation(summary = "Buscar status de dispositivo.",
-    description = "Busca um status de dispositivo existente de acordo com o ID associado.")
+            description = "Busca um status de dispositivo existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Status não encontrado."),
             @ApiResponse(responseCode = "200", description = "Status encontrado com sucesso!")
@@ -95,7 +103,7 @@ public class StatusDispositivosController {
     }
 
     @Operation(summary = "Atualizar status de dispositivo.",
-    description = "Atualiza um status de dispositivo existente de acordo com o ID associado.")
+            description = "Atualiza um status de dispositivo existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Status não encontrado."),
             @ApiResponse(responseCode = "200", description = "Status atualizado com sucesso!")
@@ -120,7 +128,7 @@ public class StatusDispositivosController {
     }
 
     @Operation(summary = "Excluir status de dispositivo.",
-    description = "Exclui um status de dispositivo existente de acordo com o ID associado.")
+            description = "Exclui um status de dispositivo existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Status não encontrado."),
             @ApiResponse(responseCode = "200", description = "Status excluído com sucesso!")

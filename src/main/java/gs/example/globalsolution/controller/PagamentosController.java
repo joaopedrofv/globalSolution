@@ -11,6 +11,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +37,7 @@ public class PagamentosController {
     private PagamentosMapper pagamentosMapper;
 
     @Operation(summary = "Criar pagamento.",
-    description = "Cria um novo pagamento de acordo com os dados proferidos.")
+            description = "Cria um novo pagamento de acordo com os dados proferidos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Pagamento criado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.")
@@ -54,20 +57,23 @@ public class PagamentosController {
     }
 
     @Operation(summary = "Buscar todos pagamentos.",
-    description = "Busca todos os pagamentos existentes")
+            description = "Busca todos os pagamentos existentes.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Nenhum pagamento encontrado."),
             @ApiResponse(responseCode = "200", description = "Lista de pagamentos retornada com sucesso!")
     })
     @GetMapping
-    public ResponseEntity<List<PagamentosResponse>> readAll() {
-        List<Pagamentos> pagamentos = pagamentosRepository.findAll();
-        if (pagamentos.isEmpty()) {
+    public ResponseEntity<List<PagamentosResponse>> readAll(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                            @RequestParam(value = "size", defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Pagamentos> pagamentosPage = pagamentosRepository.findAll(pageable);
+
+        if (pagamentosPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
         List<PagamentosResponse> responses = new ArrayList<>();
-        for (Pagamentos pagamento : pagamentos) {
+        for (Pagamentos pagamento : pagamentosPage.getContent()) {
             Link selfLink = linkTo(methodOn(PagamentosController.class).read(pagamento.getId())).withSelfRel();
             responses.add(pagamentosMapper.toResponse(pagamento, selfLink));
         }
@@ -76,7 +82,7 @@ public class PagamentosController {
     }
 
     @Operation(summary = "Buscar pagamento.",
-    description = "Busca um pagamento existente de acordo com o ID associado.")
+            description = "Busca um pagamento existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Pagamento não encontrado."),
             @ApiResponse(responseCode = "200", description = "Pagamento encontrado com sucesso!")
@@ -95,7 +101,7 @@ public class PagamentosController {
     }
 
     @Operation(summary = "Atualizar pagamento.",
-    description = "Atualiza um pagamento existente de acordo com o ID associado.")
+            description = "Atualiza um pagamento existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Pagamento não encontrado."),
             @ApiResponse(responseCode = "200", description = "Pagamento atualizado com sucesso!")
@@ -120,7 +126,7 @@ public class PagamentosController {
     }
 
     @Operation(summary = "Excluir pagamento.",
-    description = "Exclui um pagamento existente de acordo com o ID associado.")
+            description = "Exclui um pagamento existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Pagamento não encontrado."),
             @ApiResponse(responseCode = "200", description = "Pagamento excluído com sucesso!")
