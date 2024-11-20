@@ -19,7 +19,7 @@ public record FaturasRequest(
         CadastroDispositivos dispositivos,
         @NotNull(message = "O valor total da fatura não pode ser nulo.")
         @Positive(message = "O valor total da fatura deve ser um valor positivo.")
-        Integer valorTotal,
+        Long valorTotal,
         @NotNull(message = "A data de vencimento não pode ser nula.")
         Date dataVencimento,
         @NotNull(message = "A data de emissão não pode ser nula.")

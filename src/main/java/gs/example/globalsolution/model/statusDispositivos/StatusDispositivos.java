@@ -12,12 +12,16 @@ import java.sql.Timestamp;
 public class StatusDispositivos {
     @Id
     @Column(name = "ID_STATUS")
-    private long id;
+    private Long id;
+
     @ManyToOne
     @JoinColumn(name = "ID_DISPOSITIVO")
     private CadastroDispositivos dispositivos;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "STATUS")
     private Status status;
+
     @Column(name = "DATA_STATUS")
     private Timestamp dataStatus;
 }

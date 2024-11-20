@@ -14,7 +14,7 @@ public record FaturasResponse(
         Long id,
         Usuario usuario,
         CadastroDispositivos dispositivos,
-        Integer valorTotal,
+        Long valorTotal,
         Date dataVencimento,
         Date dataEmissao,
         String statusFatura,

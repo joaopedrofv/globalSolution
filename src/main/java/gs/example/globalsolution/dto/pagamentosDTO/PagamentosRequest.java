@@ -15,7 +15,7 @@ public record PagamentosRequest(
         Usuario usuario,
         @NotNull(message = "O valor do pagamento não pode ser nulo.")
         @Min(value = 0, message = "O valor do pagamento deve ser maior ou igual a zero.")
-        int valor,
+        Long valor,
         @PastOrPresent(message = "A data de pagamento não pode ser no futuro.")
         Date dataPagamento,
         @NotNull(message = "A forma de pagamento não pode ser nula.")

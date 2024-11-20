@@ -21,11 +21,11 @@ public class Faturas {
     @JoinColumn(name = "ID_DISPOSITIVO")
     private CadastroDispositivos dispositivos;
     @Column(name = "VALOR_TOTAL")
-    private int valorTotal;
+    private Long valorTotal;
     @Column(name = "DATA_VENCIMENTO")
     private Date dataVencimento;
     @Column(name = "DATA_EMISSAO")
     private Date dataEmissao;
-    @Column(name = "STATUS_FATURA")
+    @Column(name = "STATUS")
     private StatusFatura statusFatura;
 }

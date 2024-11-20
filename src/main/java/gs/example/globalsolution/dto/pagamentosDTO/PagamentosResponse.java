@@ -13,7 +13,7 @@ import java.sql.Date;
 public record PagamentosResponse(
         Long id,
         Usuario usuario,
-        int valor,
+        Long valor,
         Date dataPagamento,
         FormaPagamento formaPagamento,
         StatusPagamento statusPagamento,
