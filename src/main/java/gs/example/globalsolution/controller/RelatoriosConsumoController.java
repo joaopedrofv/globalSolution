@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,6 +43,7 @@ public class RelatoriosConsumoController {
             @ApiResponse(responseCode = "201", description = "Relatório de consumo criado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.")
     })
+    @RolesAllowed("ADMIN")
     @PostMapping
     public ResponseEntity<RelatoriosConsumoResponse> create(@Valid @RequestBody RelatoriosConsumoRequest request) {
         if (relatoriosConsumoRepository.existsById(request.id())) {
@@ -62,6 +64,7 @@ public class RelatoriosConsumoController {
             @ApiResponse(responseCode = "204", description = "Nenhum relatório encontrado."),
             @ApiResponse(responseCode = "200", description = "Lista de relatórios retornada com sucesso!")
     })
+    @RolesAllowed({"USER", "ADMIN"})
     @GetMapping
     public ResponseEntity<List<RelatoriosConsumoResponse>> readAll(@RequestParam(value = "page", defaultValue = "0") int page,
                                                                    @RequestParam(value = "size", defaultValue = "10") int size) {
@@ -87,6 +90,7 @@ public class RelatoriosConsumoController {
             @ApiResponse(responseCode = "404", description = "Relatório não encontrado."),
             @ApiResponse(responseCode = "200", description = "Relatório encontrado com sucesso!")
     })
+    @RolesAllowed({"USER", "ADMIN"})
     @GetMapping("/{id}")
     public ResponseEntity<RelatoriosConsumoResponse> read(@PathVariable Long id) {
         Optional<RelatoriosConsumo> relatorio = relatoriosConsumoRepository.findById(id);
@@ -106,6 +110,7 @@ public class RelatoriosConsumoController {
             @ApiResponse(responseCode = "404", description = "Relatório não encontrado."),
             @ApiResponse(responseCode = "200", description = "Relatório atualizado com sucesso!")
     })
+    @RolesAllowed("ADMIN")
     @PutMapping("/{id}")
     public ResponseEntity<RelatoriosConsumoResponse> update(
             @PathVariable Long id, @Valid @RequestBody RelatoriosConsumoRequest request) {
@@ -131,6 +136,7 @@ public class RelatoriosConsumoController {
             @ApiResponse(responseCode = "404", description = "Relatório não encontrado."),
             @ApiResponse(responseCode = "200", description = "Relatório excluído com sucesso!")
     })
+    @RolesAllowed({"USER", "ADMIN"})
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         Optional<RelatoriosConsumo> relatorio = relatoriosConsumoRepository.findById(id);

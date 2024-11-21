@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @RequestMapping(value = "/usuarios", produces = {"application/json"})
 @Tag(name = "Usuários", description = "Operações relacionadas a usuários.")
+@PreAuthorize("hasRole('ADMIN')") // Garante que somente administradores terão acesso a todas as operações do controlador
 public class UsuarioController {
 
     @Autowired

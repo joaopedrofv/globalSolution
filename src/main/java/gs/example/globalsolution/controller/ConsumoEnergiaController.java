@@ -19,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @RequestMapping(value = "/consumo-energia", produces = {"application/json"})
 @Tag(name = "Consumo de Energia", description = "Operações relacionadas a registros de consumo de energia.")
+@PreAuthorize("hasRole('ADMIN')") // Garante que somente administradores terão acesso a todas as operações do controlador
 public class ConsumoEnergiaController {
 
     @Autowired

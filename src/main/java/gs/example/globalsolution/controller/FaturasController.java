@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
@@ -45,6 +46,7 @@ public class FaturasController {
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.",
                     content = @Content(schema = @Schema()))
     })
+    @RolesAllowed("ADMIN")
     @PostMapping
     public ResponseEntity<FaturasResponse> create(@Valid @RequestBody FaturasRequest request) {
         if (faturasRepository.existsById(request.id())) {
@@ -65,6 +67,7 @@ public class FaturasController {
             @ApiResponse(responseCode = "204", description = "Nenhuma fatura encontrada."),
             @ApiResponse(responseCode = "200", description = "Lista de faturas retornada com sucesso!")
     })
+    @RolesAllowed({"USER", "ADMIN"})
     @GetMapping
     public ResponseEntity<List<FaturasResponse>> readAll(@RequestParam(value = "page", defaultValue = "0") int page,
                                                          @RequestParam(value = "size", defaultValue = "10") int size) {
@@ -90,6 +93,7 @@ public class FaturasController {
             @ApiResponse(responseCode = "404", description = "Fatura não encontrada."),
             @ApiResponse(responseCode = "200", description = "Fatura encontrada com sucesso!")
     })
+    @RolesAllowed({"USER", "ADMIN"})
     @GetMapping("/{id}")
     public ResponseEntity<FaturasResponse> read(@PathVariable Long id) {
         Optional<Faturas> fatura = faturasRepository.findById(id);
@@ -109,6 +113,7 @@ public class FaturasController {
             @ApiResponse(responseCode = "404", description = "Fatura não encontrada."),
             @ApiResponse(responseCode = "200", description = "Fatura atualizada com sucesso!")
     })
+    @RolesAllowed({"ADMIN", "USER"})
     @PutMapping("/{id}")
     public ResponseEntity<FaturasResponse> update(
             @PathVariable Long id, @Valid @RequestBody FaturasRequest request) {
@@ -134,6 +139,7 @@ public class FaturasController {
             @ApiResponse(responseCode = "404", description = "Fatura não encontrada."),
             @ApiResponse(responseCode = "200", description = "Fatura excluída com sucesso!")
     })
+    @RolesAllowed("ADMIN")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         Optional<Faturas> fatura = faturasRepository.findById(id);

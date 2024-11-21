@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,6 +43,7 @@ public class NotificacoesController {
             @ApiResponse(responseCode = "201", description = "Notificação criada com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.")
     })
+    @RolesAllowed("ADMIN")
     @PostMapping
     public ResponseEntity<NotificacoesResponse> create(@Valid @RequestBody NotificacoesRequest request) {
         if (notificacoesRepository.existsById(request.id())) {
@@ -62,6 +64,7 @@ public class NotificacoesController {
             @ApiResponse(responseCode = "204", description = "Nenhuma notificação encontrada."),
             @ApiResponse(responseCode = "200", description = "Lista de notificações retornada com sucesso!")
     })
+    @RolesAllowed({"USER", "ADMIN"})
     @GetMapping
     public ResponseEntity<List<NotificacoesResponse>> readAll(@RequestParam(value = "page", defaultValue = "0") int page,
                                                               @RequestParam(value = "size", defaultValue = "10") int size) {
@@ -87,6 +90,7 @@ public class NotificacoesController {
             @ApiResponse(responseCode = "404", description = "Notificação não encontrada."),
             @ApiResponse(responseCode = "200", description = "Notificação encontrada com sucesso!")
     })
+    @RolesAllowed({"USER", "ADMIN"})
     @GetMapping("/{id}")
     public ResponseEntity<NotificacoesResponse> read(@PathVariable Long id) {
         Optional<Notificacoes> notificacao = notificacoesRepository.findById(id);
@@ -106,6 +110,7 @@ public class NotificacoesController {
             @ApiResponse(responseCode = "404", description = "Notificação não encontrada."),
             @ApiResponse(responseCode = "200", description = "Notificação atualizada com sucesso!")
     })
+    @RolesAllowed("ADMIN")
     @PutMapping("/{id}")
     public ResponseEntity<NotificacoesResponse> update(
             @PathVariable Long id, @Valid @RequestBody NotificacoesRequest request) {
@@ -131,6 +136,7 @@ public class NotificacoesController {
             @ApiResponse(responseCode = "404", description = "Notificação não encontrada."),
             @ApiResponse(responseCode = "200", description = "Notificação excluída com sucesso!")
     })
+    @RolesAllowed({"USER", "ADMIN"})
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         Optional<Notificacoes> notificacao = notificacoesRepository.findById(id);

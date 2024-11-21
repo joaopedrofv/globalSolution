@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,6 +43,7 @@ public class PagamentosController {
             @ApiResponse(responseCode = "201", description = "Pagamento criado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.")
     })
+    @RolesAllowed({"USER", "ADMIN"})
     @PostMapping
     public ResponseEntity<PagamentosResponse> create(@Valid @RequestBody PagamentosRequest request) {
         if (pagamentosRepository.existsById(request.id())) {
@@ -62,6 +64,7 @@ public class PagamentosController {
             @ApiResponse(responseCode = "204", description = "Nenhum pagamento encontrado."),
             @ApiResponse(responseCode = "200", description = "Lista de pagamentos retornada com sucesso!")
     })
+    @RolesAllowed({"USER", "ADMIN"})
     @GetMapping
     public ResponseEntity<List<PagamentosResponse>> readAll(@RequestParam(value = "page", defaultValue = "0") int page,
                                                             @RequestParam(value = "size", defaultValue = "10") int size) {
@@ -87,6 +90,7 @@ public class PagamentosController {
             @ApiResponse(responseCode = "404", description = "Pagamento não encontrado."),
             @ApiResponse(responseCode = "200", description = "Pagamento encontrado com sucesso!")
     })
+    @RolesAllowed({"USER", "ADMIN"})
     @GetMapping("/{id}")
     public ResponseEntity<PagamentosResponse> read(@PathVariable Long id) {
         Optional<Pagamentos> pagamento = pagamentosRepository.findById(id);
@@ -106,6 +110,7 @@ public class PagamentosController {
             @ApiResponse(responseCode = "404", description = "Pagamento não encontrado."),
             @ApiResponse(responseCode = "200", description = "Pagamento atualizado com sucesso!")
     })
+    @RolesAllowed({"USER", "ADMIN"})
     @PutMapping("/{id}")
     public ResponseEntity<PagamentosResponse> update(
             @PathVariable Long id, @Valid @RequestBody PagamentosRequest request) {
@@ -131,6 +136,7 @@ public class PagamentosController {
             @ApiResponse(responseCode = "404", description = "Pagamento não encontrado."),
             @ApiResponse(responseCode = "200", description = "Pagamento excluído com sucesso!")
     })
+    @RolesAllowed("ADMIN")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         Optional<Pagamentos> pagamento = pagamentosRepository.findById(id);
