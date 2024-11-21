@@ -1,0 +1,639 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class CadastroDispositivos {
+  + CadastroDispositivos(): 
+  - dataInstalacao: Date
+  - usuario: Usuario
+  - id: long
+  - tipoDispositivo: String
+  + toString(): String
+  + equals(Object): boolean
+  # canEqual(Object): boolean
+  + hashCode(): int
+   tipoDispositivo: String
+   id: long
+   dataInstalacao: Date
+   usuario: Usuario
+}
+class CadastroDispositivosController {
+  + CadastroDispositivosController(): 
+  + update(Long, CadastroDispositivosRequest): ResponseEntity<CadastroDispositivosResponse>
+  + create(CadastroDispositivosRequest): ResponseEntity<CadastroDispositivosResponse>
+  + delete(Long): ResponseEntity<Void>
+  + read(Long): ResponseEntity<CadastroDispositivosResponse>
+  + readAll(int, int): ResponseEntity<List<CadastroDispositivosResponse>>
+}
+class CadastroDispositivosMapper {
+  + CadastroDispositivosMapper(): 
+  + requestToCadastroDispositivos(CadastroDispositivosRequest): CadastroDispositivos
+  + cadastroDispositivosToResponseDTO(CadastroDispositivos, Link): CadastroDispositivosResponse
+}
+interface CadastroDispositivosRepository << interface >>
+entity CadastroDispositivosRequest << record >> {
+  + CadastroDispositivosRequest(Long, Usuario, String, Date): 
+  + id(): Long
+  + usuario(): Usuario
+  + tipoDispositivo(): String
+  + dataInstalacao(): Date
+}
+entity CadastroDispositivosResponse << record >> {
+  + CadastroDispositivosResponse(Long, Usuario, String, Date, Link): 
+  + tipoDispositivo(): String
+  + usuario(): Usuario
+  + link(): Link
+  + id(): Long
+  + dataInstalacao(): Date
+}
+class Configuracoes {
+  + Configuracoes(): 
+  - corteInicio: Timestamp
+  - alerta: Long
+  - usuario: Usuario
+  - corteFim: Timestamp
+  - id: Long
+  - preferencias: String
+  + hashCode(): int
+  # canEqual(Object): boolean
+  + equals(Object): boolean
+  + toString(): String
+   preferencias: String
+   id: Long
+   corteInicio: Timestamp
+   corteFim: Timestamp
+   usuario: Usuario
+   alerta: Long
+}
+class ConfiguracoesController {
+  + ConfiguracoesController(): 
+  + delete(Long): ResponseEntity<Void>
+  + readAll(int, int): ResponseEntity<List<ConfiguracoesResponse>>
+  + create(ConfiguracoesRequest): ResponseEntity<ConfiguracoesResponse>
+  + read(Long): ResponseEntity<ConfiguracoesResponse>
+  + update(Long, ConfiguracoesRequest): ResponseEntity<ConfiguracoesResponse>
+}
+class ConfiguracoesMapper {
+  + ConfiguracoesMapper(): 
+  + requestToConfiguracoes(ConfiguracoesRequest): Configuracoes
+  + configuracoesToResponseDTO(Configuracoes, Link): ConfiguracoesResponse
+}
+interface ConfiguracoesRepository << interface >>
+entity ConfiguracoesRequest << record >> {
+  + ConfiguracoesRequest(Long, Usuario, Timestamp, Timestamp, Long, String): 
+  + id(): Long
+  + usuario(): Usuario
+  + corteInicio(): Timestamp
+  + corteFim(): Timestamp
+  + alerta(): Long
+  + preferencias(): String
+}
+entity ConfiguracoesResponse << record >> {
+  + ConfiguracoesResponse(Long, Usuario, Timestamp, Timestamp, Long, String, Link): 
+  + corteInicio(): Timestamp
+  + preferencias(): String
+  + alerta(): Long
+  + id(): Long
+  + usuario(): Usuario
+  + corteFim(): Timestamp
+  + link(): Link
+}
+class ConsumoEnergia {
+  + ConsumoEnergia(): 
+  - consumoKWH: int
+  - id: long
+  - dispositivos: CadastroDispositivos
+  - dataHora: Date
+  - precoKWH: int
+  # canEqual(Object): boolean
+  + toString(): String
+  + hashCode(): int
+  + equals(Object): boolean
+   dispositivos: CadastroDispositivos
+   precoKWH: int
+   consumoKWH: int
+   id: long
+   dataHora: Date
+}
+class ConsumoEnergiaController {
+  + ConsumoEnergiaController(): 
+  + create(ConsumoEnergiaRequest): ResponseEntity<ConsumoEnergiaResponse>
+  + readAll(int, int): ResponseEntity<List<ConsumoEnergiaResponse>>
+  + delete(Long): ResponseEntity<Void>
+  + update(Long, ConsumoEnergiaRequest): ResponseEntity<ConsumoEnergiaResponse>
+  + read(Long): ResponseEntity<ConsumoEnergiaResponse>
+}
+class ConsumoEnergiaMapper {
+  + ConsumoEnergiaMapper(): 
+  + consumoEnergiaToResponseDTO(ConsumoEnergia, Link): ConsumoEnergiaResponse
+  + requestToConsumoEnergia(ConsumoEnergiaRequest): ConsumoEnergia
+}
+interface ConsumoEnergiaRepository << interface >>
+entity ConsumoEnergiaRequest << record >> {
+  + ConsumoEnergiaRequest(Long, CadastroDispositivos, Date, Integer, Integer): 
+  + dataHora(): Date
+  + cadastroDispositivos(): CadastroDispositivos
+  + precoKWH(): Integer
+  + id(): Long
+  + consumoKWH(): Integer
+}
+entity ConsumoEnergiaResponse << record >> {
+  + ConsumoEnergiaResponse(Long, CadastroDispositivos, Date, Integer, Integer, Link): 
+  + cadastroDispositivos(): CadastroDispositivos
+  + dataHora(): Date
+  + precoKWH(): Integer
+  + link(): Link
+  + id(): Long
+  + consumoKWH(): Integer
+}
+class Faturas {
+  + Faturas(): 
+  - id: Long
+  - statusFatura: StatusFatura
+  - usuario: Usuario
+  - dispositivos: CadastroDispositivos
+  - dataEmissao: Date
+  - dataVencimento: Date
+  - valorTotal: Long
+  # canEqual(Object): boolean
+  + equals(Object): boolean
+  + hashCode(): int
+  + toString(): String
+   dataVencimento: Date
+   statusFatura: StatusFatura
+   id: Long
+   usuario: Usuario
+   dispositivos: CadastroDispositivos
+   dataEmissao: Date
+   valorTotal: Long
+}
+class FaturasController {
+  + FaturasController(): 
+  + readAll(int, int): ResponseEntity<List<FaturasResponse>>
+  + read(Long): ResponseEntity<FaturasResponse>
+  + update(Long, FaturasRequest): ResponseEntity<FaturasResponse>
+  + create(FaturasRequest): ResponseEntity<FaturasResponse>
+  + delete(Long): ResponseEntity<Void>
+}
+class FaturasMapper {
+  + FaturasMapper(): 
+  + toEntity(FaturasRequest): Faturas
+  + toResponse(Faturas, Link): FaturasResponse
+}
+interface FaturasRepository << interface >>
+entity FaturasRequest << record >> {
+  + FaturasRequest(Long, Usuario, CadastroDispositivos, Long, Date, Date, String): 
+  + dispositivos(): CadastroDispositivos
+  + valorTotal(): Long
+  + dataEmissao(): Date
+  + usuario(): Usuario
+  + dataVencimento(): Date
+  + id(): Long
+  + statusFatura(): String
+}
+entity FaturasResponse << record >> {
+  + FaturasResponse(Long, Usuario, CadastroDispositivos, Long, Date, Date, String, Link): 
+  + dataEmissao(): Date
+  + usuario(): Usuario
+  + id(): Long
+  + valorTotal(): Long
+  + statusFatura(): String
+  + dispositivos(): CadastroDispositivos
+  + link(): Link
+  + dataVencimento(): Date
+}
+enum FormaPagamento << enumeration >> {
+  - FormaPagamento(String): 
+  - descricao: String
+  + values(): FormaPagamento[]
+  + valueOf(String): FormaPagamento
+   descricao: String
+}
+class GlobalSolutionApplication {
+  + GlobalSolutionApplication(): 
+  + main(String[]): void
+  + customOpenAPI(): OpenAPI
+}
+class Notificacoes {
+  + Notificacoes(): 
+  - leitura: Boolean
+  - id: long
+  - dataEnvio: Date
+  - mensagem: String
+  - tipo: TipoNotificacao
+  - usuario: Usuario
+  # canEqual(Object): boolean
+  + hashCode(): int
+  + toString(): String
+  + equals(Object): boolean
+   mensagem: String
+   dataEnvio: Date
+   tipo: TipoNotificacao
+   id: long
+   leitura: Boolean
+   usuario: Usuario
+}
+class NotificacoesController {
+  + NotificacoesController(): 
+  + create(NotificacoesRequest): ResponseEntity<NotificacoesResponse>
+  + delete(Long): ResponseEntity<Void>
+  + update(Long, NotificacoesRequest): ResponseEntity<NotificacoesResponse>
+  + readAll(int, int): ResponseEntity<List<NotificacoesResponse>>
+  + read(Long): ResponseEntity<NotificacoesResponse>
+}
+class NotificacoesMapper {
+  + NotificacoesMapper(): 
+  + toEntity(NotificacoesRequest): Notificacoes
+  + toResponse(Notificacoes, Link): NotificacoesResponse
+}
+interface NotificacoesRepository << interface >>
+entity NotificacoesRequest << record >> {
+  + NotificacoesRequest(Long, Usuario, String, TipoNotificacao, Date, Boolean): 
+  + leitura(): Boolean
+  + id(): Long
+  + tipo(): TipoNotificacao
+  + dataEnvio(): Date
+  + usuario(): Usuario
+  + mensagem(): String
+}
+entity NotificacoesResponse << record >> {
+  + NotificacoesResponse(Long, Usuario, String, TipoNotificacao, Date, Boolean, Link): 
+  + id(): Long
+  + tipo(): TipoNotificacao
+  + dataEnvio(): Date
+  + leitura(): Boolean
+  + usuario(): Usuario
+  + mensagem(): String
+  + link(): Link
+}
+class Pagamentos {
+  + Pagamentos(): 
+  - usuario: Usuario
+  - formaPagamento: FormaPagamento
+  - id: Long
+  - statusPagamento: StatusPagamento
+  - dataPagamento: Date
+  - valor: Long
+  # canEqual(Object): boolean
+  + equals(Object): boolean
+  + hashCode(): int
+  + toString(): String
+   statusPagamento: StatusPagamento
+   valor: Long
+   dataPagamento: Date
+   id: Long
+   formaPagamento: FormaPagamento
+   usuario: Usuario
+}
+class PagamentosController {
+  + PagamentosController(): 
+  + delete(Long): ResponseEntity<Void>
+  + readAll(int, int): ResponseEntity<List<PagamentosResponse>>
+  + read(Long): ResponseEntity<PagamentosResponse>
+  + update(Long, PagamentosRequest): ResponseEntity<PagamentosResponse>
+  + create(PagamentosRequest): ResponseEntity<PagamentosResponse>
+}
+class PagamentosMapper {
+  + PagamentosMapper(): 
+  + toEntity(PagamentosRequest): Pagamentos
+  + toResponse(Pagamentos, Link): PagamentosResponse
+}
+interface PagamentosRepository << interface >>
+entity PagamentosRequest << record >> {
+  + PagamentosRequest(Long, Usuario, Long, Date, FormaPagamento, StatusPagamento): 
+  + usuario(): Usuario
+  + valor(): Long
+  + statusPagamento(): StatusPagamento
+  + dataPagamento(): Date
+  + id(): Long
+  + formaPagamento(): FormaPagamento
+}
+entity PagamentosResponse << record >> {
+  + PagamentosResponse(Long, Usuario, Long, Date, FormaPagamento, StatusPagamento, Link): 
+  + statusPagamento(): StatusPagamento
+  + usuario(): Usuario
+  + valor(): Long
+  + id(): Long
+  + link(): Link
+  + dataPagamento(): Date
+  + formaPagamento(): FormaPagamento
+}
+class RelatoriosConsumo {
+  + RelatoriosConsumo(): 
+  - usuario: Usuario
+  - dataCriacao: Date
+  - periodoInicio: Date
+  - periodoFim: Date
+  - totalPago: int
+  - id: long
+  - totalConsumidoKWH: int
+  - analiseTexto: String
+  + toString(): String
+  + hashCode(): int
+  + equals(Object): boolean
+  # canEqual(Object): boolean
+   periodoInicio: Date
+   periodoFim: Date
+   totalConsumidoKWH: int
+   analiseTexto: String
+   usuario: Usuario
+   dataCriacao: Date
+   totalPago: int
+   id: long
+}
+class RelatoriosConsumoController {
+  + RelatoriosConsumoController(): 
+  + read(Long): ResponseEntity<RelatoriosConsumoResponse>
+  + delete(Long): ResponseEntity<Void>
+  + create(RelatoriosConsumoRequest): ResponseEntity<RelatoriosConsumoResponse>
+  + update(Long, RelatoriosConsumoRequest): ResponseEntity<RelatoriosConsumoResponse>
+  + readAll(int, int): ResponseEntity<List<RelatoriosConsumoResponse>>
+}
+class RelatoriosConsumoMapper {
+  + RelatoriosConsumoMapper(): 
+  + toEntity(RelatoriosConsumoRequest): RelatoriosConsumo
+  + toResponse(RelatoriosConsumo, Link): RelatoriosConsumoResponse
+}
+interface RelatoriosConsumoRepository << interface >>
+entity RelatoriosConsumoRequest << record >> {
+  + RelatoriosConsumoRequest(Long, Usuario, Date, Date, int, int, String, Date): 
+  + dataCriacao(): Date
+  + periodoInicio(): Date
+  + totalPago(): int
+  + usuario(): Usuario
+  + periodoFim(): Date
+  + analiseTexto(): String
+  + totalConsumidoKWH(): int
+  + id(): Long
+}
+entity RelatoriosConsumoResponse << record >> {
+  + RelatoriosConsumoResponse(Long, Usuario, Date, Date, int, int, String, Date, Link): 
+  + link(): Link
+  + id(): Long
+  + dataCriacao(): Date
+  + analiseTexto(): String
+  + usuario(): Usuario
+  + totalPago(): int
+  + periodoInicio(): Date
+  + periodoFim(): Date
+  + totalConsumidoKWH(): int
+}
+class SecurityConfig {
+  + SecurityConfig(): 
+  + userDetailsService(): UserDetailsService
+  + securityFilterChain(HttpSecurity): SecurityFilterChain
+}
+enum Status << enumeration >> {
+  - Status(String): 
+  - descricao: String
+  + valueOf(String): Status
+  + values(): Status[]
+   descricao: String
+}
+class StatusDispositivos {
+  + StatusDispositivos(): 
+  - id: Long
+  - status: Status
+  - dispositivos: CadastroDispositivos
+  - dataStatus: Timestamp
+  + toString(): String
+  + equals(Object): boolean
+  # canEqual(Object): boolean
+  + hashCode(): int
+   dispositivos: CadastroDispositivos
+   dataStatus: Timestamp
+   id: Long
+   status: Status
+}
+class StatusDispositivosController {
+  + StatusDispositivosController(): 
+  + update(Long, StatusDispositivosRequest): ResponseEntity<StatusDispositivosResponse>
+  + create(StatusDispositivosRequest): ResponseEntity<StatusDispositivosResponse>
+  + read(Long): ResponseEntity<StatusDispositivosResponse>
+  + delete(Long): ResponseEntity<Void>
+  + readAll(int, int): ResponseEntity<List<StatusDispositivosResponse>>
+}
+class StatusDispositivosMapper {
+  + StatusDispositivosMapper(): 
+  + toEntity(StatusDispositivosRequest): StatusDispositivos
+  + toResponse(StatusDispositivos, Link): StatusDispositivosResponse
+}
+interface StatusDispositivosRepository << interface >>
+entity StatusDispositivosRequest << record >> {
+  + StatusDispositivosRequest(Long, CadastroDispositivos, Status, Timestamp): 
+  + dispositivos(): CadastroDispositivos
+  + dataStatus(): Timestamp
+  + id(): Long
+  + status(): Status
+}
+entity StatusDispositivosResponse << record >> {
+  + StatusDispositivosResponse(Long, CadastroDispositivos, Status, Timestamp, Link): 
+  + dataStatus(): Timestamp
+  + id(): Long
+  + link(): Link
+  + dispositivos(): CadastroDispositivos
+  + status(): Status
+}
+enum StatusFatura << enumeration >> {
+  - StatusFatura(String): 
+  - descricao: String
+  + values(): StatusFatura[]
+  + valueOf(String): StatusFatura
+   descricao: String
+}
+enum StatusPagamento << enumeration >> {
+  - StatusPagamento(String): 
+  - descricao: String
+  + values(): StatusPagamento[]
+  + valueOf(String): StatusPagamento
+   descricao: String
+}
+enum TipoNotificacao << enumeration >> {
+  - TipoNotificacao(String): 
+  - descricao: String
+  + values(): TipoNotificacao[]
+  + valueOf(String): TipoNotificacao
+   descricao: String
+}
+class Usuario {
+  + Usuario(): 
+  - email: String
+  - id: long
+  - telefone: String
+  - endereco: String
+  - nome: String
+  - dataCriacao: Date
+  + equals(Object): boolean
+  + toString(): String
+  # canEqual(Object): boolean
+  + hashCode(): int
+   telefone: String
+   endereco: String
+   id: long
+   nome: String
+   email: String
+   dataCriacao: Date
+}
+class UsuarioController {
+  + UsuarioController(): 
+  + delete(Long): ResponseEntity<Void>
+  + create(UsuarioRequest): ResponseEntity<UsuarioResponse>
+  + update(Long, UsuarioRequest): ResponseEntity<UsuarioResponse>
+  + readAll(int, int): ResponseEntity<List<UsuarioResponse>>
+  + read(Long): ResponseEntity<UsuarioResponse>
+}
+class UsuarioMapper {
+  + UsuarioMapper(): 
+  + toEntity(UsuarioRequest): Usuario
+  + toResponse(Usuario, Link): UsuarioResponse
+}
+interface UsuarioRepository << interface >>
+entity UsuarioRequest << record >> {
+  + UsuarioRequest(Long, String, String, String, String, Date): 
+  + telefone(): String
+  + id(): Long
+  + dataCriacao(): Date
+  + nome(): String
+  + email(): String
+  + endereco(): String
+}
+entity UsuarioResponse << record >> {
+  + UsuarioResponse(Long, String, String, String, String, Date, Link): 
+  + dataCriacao(): Date
+  + link(): Link
+  + telefone(): String
+  + id(): Long
+  + endereco(): String
+  + nome(): String
+  + email(): String
+}
+class ValidationExceptionHandler {
+  + ValidationExceptionHandler(): 
+  + handleValidationExceptions(MethodArgumentNotValidException): ResponseEntity<Map<String, String>>
+}
+
+CadastroDispositivos           "1" *-[#595959,plain]-> "usuario\n1" Usuario                        
+CadastroDispositivosController  -[#595959,dashed]->  CadastroDispositivos           
+CadastroDispositivosController "1" *-[#595959,plain]-> "dispositivosMapper\n1" CadastroDispositivosMapper     
+CadastroDispositivosController "1" *-[#595959,plain]-> "dispositivosRepository\n1" CadastroDispositivosRepository 
+CadastroDispositivosController  -[#595959,dashed]->  CadastroDispositivosRequest    
+CadastroDispositivosController  -[#595959,dashed]->  CadastroDispositivosResponse   
+CadastroDispositivosMapper      -[#595959,dashed]->  CadastroDispositivos           : "«create»"
+CadastroDispositivosMapper      -[#595959,dashed]->  CadastroDispositivosRequest    
+CadastroDispositivosMapper      -[#595959,dashed]->  CadastroDispositivosResponse   : "«create»"
+CadastroDispositivosRepository  -[#595959,dashed]->  CadastroDispositivos           
+CadastroDispositivosRequest     -[#595959,dashed]->  Usuario                        
+CadastroDispositivosResponse    -[#595959,dashed]->  Usuario                        
+Configuracoes                  "1" *-[#595959,plain]-> "usuario\n1" Usuario                        
+ConfiguracoesController         -[#595959,dashed]->  Configuracoes                  
+ConfiguracoesController        "1" *-[#595959,plain]-> "configuracoesMapper\n1" ConfiguracoesMapper            
+ConfiguracoesController        "1" *-[#595959,plain]-> "configuracoesRepository\n1" ConfiguracoesRepository        
+ConfiguracoesController         -[#595959,dashed]->  ConfiguracoesRequest           
+ConfiguracoesController         -[#595959,dashed]->  ConfiguracoesResponse          
+ConfiguracoesMapper             -[#595959,dashed]->  Configuracoes                  : "«create»"
+ConfiguracoesMapper             -[#595959,dashed]->  ConfiguracoesRequest           
+ConfiguracoesMapper             -[#595959,dashed]->  ConfiguracoesResponse          : "«create»"
+ConfiguracoesRepository         -[#595959,dashed]->  Configuracoes                  
+ConfiguracoesRequest            -[#595959,dashed]->  Usuario                        
+ConfiguracoesResponse           -[#595959,dashed]->  Usuario                        
+ConsumoEnergia                 "1" *-[#595959,plain]-> "dispositivos\n1" CadastroDispositivos           
+ConsumoEnergiaController        -[#595959,dashed]->  ConsumoEnergia                 
+ConsumoEnergiaController       "1" *-[#595959,plain]-> "consumoEnergiaMapper\n1" ConsumoEnergiaMapper           
+ConsumoEnergiaController       "1" *-[#595959,plain]-> "consumoEnergiaRepository\n1" ConsumoEnergiaRepository       
+ConsumoEnergiaController        -[#595959,dashed]->  ConsumoEnergiaRequest          
+ConsumoEnergiaController        -[#595959,dashed]->  ConsumoEnergiaResponse         
+ConsumoEnergiaMapper            -[#595959,dashed]->  ConsumoEnergia                 : "«create»"
+ConsumoEnergiaMapper            -[#595959,dashed]->  ConsumoEnergiaRequest          
+ConsumoEnergiaMapper            -[#595959,dashed]->  ConsumoEnergiaResponse         : "«create»"
+ConsumoEnergiaRepository        -[#595959,dashed]->  ConsumoEnergia                 
+ConsumoEnergiaRequest           -[#595959,dashed]->  CadastroDispositivos           
+ConsumoEnergiaResponse          -[#595959,dashed]->  CadastroDispositivos           
+Faturas                        "1" *-[#595959,plain]-> "dispositivos\n1" CadastroDispositivos           
+Faturas                        "1" *-[#595959,plain]-> "statusFatura\n1" StatusFatura                   
+Faturas                        "1" *-[#595959,plain]-> "usuario\n1" Usuario                        
+FaturasController               -[#595959,dashed]->  Faturas                        
+FaturasController              "1" *-[#595959,plain]-> "faturasMapper\n1" FaturasMapper                  
+FaturasController              "1" *-[#595959,plain]-> "faturasRepository\n1" FaturasRepository              
+FaturasController               -[#595959,dashed]->  FaturasRequest                 
+FaturasController               -[#595959,dashed]->  FaturasResponse                
+FaturasMapper                   -[#595959,dashed]->  Faturas                        : "«create»"
+FaturasMapper                   -[#595959,dashed]->  FaturasRequest                 
+FaturasMapper                   -[#595959,dashed]->  FaturasResponse                : "«create»"
+FaturasMapper                   -[#595959,dashed]->  StatusFatura                   
+FaturasRepository               -[#595959,dashed]->  Faturas                        
+FaturasRequest                  -[#595959,dashed]->  CadastroDispositivos           
+FaturasRequest                  -[#595959,dashed]->  Usuario                        
+FaturasResponse                 -[#595959,dashed]->  CadastroDispositivos           
+FaturasResponse                 -[#595959,dashed]->  Usuario                        
+Notificacoes                   "1" *-[#595959,plain]-> "tipo\n1" TipoNotificacao                
+Notificacoes                   "1" *-[#595959,plain]-> "usuario\n1" Usuario                        
+NotificacoesController          -[#595959,dashed]->  Notificacoes                   
+NotificacoesController         "1" *-[#595959,plain]-> "notificacoesMapper\n1" NotificacoesMapper             
+NotificacoesController         "1" *-[#595959,plain]-> "notificacoesRepository\n1" NotificacoesRepository         
+NotificacoesController          -[#595959,dashed]->  NotificacoesRequest            
+NotificacoesController          -[#595959,dashed]->  NotificacoesResponse           
+NotificacoesMapper              -[#595959,dashed]->  Notificacoes                   : "«create»"
+NotificacoesMapper              -[#595959,dashed]->  NotificacoesRequest            
+NotificacoesMapper              -[#595959,dashed]->  NotificacoesResponse           : "«create»"
+NotificacoesRepository          -[#595959,dashed]->  Notificacoes                   
+NotificacoesRequest             -[#595959,dashed]->  TipoNotificacao                
+NotificacoesRequest             -[#595959,dashed]->  Usuario                        
+NotificacoesResponse            -[#595959,dashed]->  TipoNotificacao                
+NotificacoesResponse            -[#595959,dashed]->  Usuario                        
+Pagamentos                     "1" *-[#595959,plain]-> "formaPagamento\n1" FormaPagamento                 
+Pagamentos                     "1" *-[#595959,plain]-> "statusPagamento\n1" StatusPagamento                
+Pagamentos                     "1" *-[#595959,plain]-> "usuario\n1" Usuario                        
+PagamentosController            -[#595959,dashed]->  Pagamentos                     
+PagamentosController           "1" *-[#595959,plain]-> "pagamentosMapper\n1" PagamentosMapper               
+PagamentosController           "1" *-[#595959,plain]-> "pagamentosRepository\n1" PagamentosRepository           
+PagamentosController            -[#595959,dashed]->  PagamentosRequest              
+PagamentosController            -[#595959,dashed]->  PagamentosResponse             
+PagamentosMapper                -[#595959,dashed]->  Pagamentos                     : "«create»"
+PagamentosMapper                -[#595959,dashed]->  PagamentosRequest              
+PagamentosMapper                -[#595959,dashed]->  PagamentosResponse             : "«create»"
+PagamentosRepository            -[#595959,dashed]->  Pagamentos                     
+PagamentosRequest               -[#595959,dashed]->  FormaPagamento                 
+PagamentosRequest               -[#595959,dashed]->  StatusPagamento                
+PagamentosRequest               -[#595959,dashed]->  Usuario                        
+PagamentosResponse              -[#595959,dashed]->  FormaPagamento                 
+PagamentosResponse              -[#595959,dashed]->  StatusPagamento                
+PagamentosResponse              -[#595959,dashed]->  Usuario                        
+RelatoriosConsumo              "1" *-[#595959,plain]-> "usuario\n1" Usuario                        
+RelatoriosConsumoController     -[#595959,dashed]->  RelatoriosConsumo              
+RelatoriosConsumoController    "1" *-[#595959,plain]-> "relatoriosConsumoMapper\n1" RelatoriosConsumoMapper        
+RelatoriosConsumoController    "1" *-[#595959,plain]-> "relatoriosConsumoRepository\n1" RelatoriosConsumoRepository    
+RelatoriosConsumoController     -[#595959,dashed]->  RelatoriosConsumoRequest       
+RelatoriosConsumoController     -[#595959,dashed]->  RelatoriosConsumoResponse      
+RelatoriosConsumoMapper         -[#595959,dashed]->  RelatoriosConsumo              : "«create»"
+RelatoriosConsumoMapper         -[#595959,dashed]->  RelatoriosConsumoRequest       
+RelatoriosConsumoMapper         -[#595959,dashed]->  RelatoriosConsumoResponse      : "«create»"
+RelatoriosConsumoRepository     -[#595959,dashed]->  RelatoriosConsumo              
+RelatoriosConsumoRequest        -[#595959,dashed]->  Usuario                        
+RelatoriosConsumoResponse       -[#595959,dashed]->  Usuario                        
+StatusDispositivos             "1" *-[#595959,plain]-> "dispositivos\n1" CadastroDispositivos           
+StatusDispositivos             "1" *-[#595959,plain]-> "status\n1" Status                         
+StatusDispositivosController    -[#595959,dashed]->  StatusDispositivos             
+StatusDispositivosController   "1" *-[#595959,plain]-> "statusDispositivosMapper\n1" StatusDispositivosMapper       
+StatusDispositivosController   "1" *-[#595959,plain]-> "statusDispositivosRepository\n1" StatusDispositivosRepository   
+StatusDispositivosController    -[#595959,dashed]->  StatusDispositivosRequest      
+StatusDispositivosController    -[#595959,dashed]->  StatusDispositivosResponse     
+StatusDispositivosMapper        -[#595959,dashed]->  StatusDispositivos             : "«create»"
+StatusDispositivosMapper        -[#595959,dashed]->  StatusDispositivosRequest      
+StatusDispositivosMapper        -[#595959,dashed]->  StatusDispositivosResponse     : "«create»"
+StatusDispositivosRepository    -[#595959,dashed]->  StatusDispositivos             
+StatusDispositivosRequest       -[#595959,dashed]->  CadastroDispositivos           
+StatusDispositivosRequest       -[#595959,dashed]->  Status                         
+StatusDispositivosResponse      -[#595959,dashed]->  CadastroDispositivos           
+StatusDispositivosResponse      -[#595959,dashed]->  Status                         
+UsuarioController               -[#595959,dashed]->  Usuario                        
+UsuarioController              "1" *-[#595959,plain]-> "usuarioMapper\n1" UsuarioMapper                  
+UsuarioController              "1" *-[#595959,plain]-> "usuarioRepository\n1" UsuarioRepository              
+UsuarioController               -[#595959,dashed]->  UsuarioRequest                 
+UsuarioController               -[#595959,dashed]->  UsuarioResponse                
+UsuarioMapper                   -[#595959,dashed]->  Usuario                        : "«create»"
+UsuarioMapper                   -[#595959,dashed]->  UsuarioRequest                 
+UsuarioMapper                   -[#595959,dashed]->  UsuarioResponse                : "«create»"
+UsuarioRepository               -[#595959,dashed]->  Usuario                        
+@enduml
