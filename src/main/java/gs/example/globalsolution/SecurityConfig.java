@@ -12,11 +12,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-    // Definindo os usuários (user e admin)
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails user = User.withUsername("user")
-                .password("{noop}password")  // {noop} sem codificação de senha, apenas para testes
+                .password("{noop}password")
                 .roles("USER")
                 .build();
 
@@ -28,21 +27,19 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(user, admin);
     }
 
-    // Configuração do filtro de segurança
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()  // Desabilita CSRF para facilitar os testes (recomendado para APIs)
+        http.csrf().disable()
                 .authorizeRequests()
-                // Protegendo os endpoints específicos dos controladores
+
                 .requestMatchers("/dispositivos/**").hasRole("ADMIN")
-                .requestMatchers("/configuracoes/**").hasRole("ADMIN") // Outros controladores
+                .requestMatchers("/configuracoes/**").hasRole("ADMIN")
                 .requestMatchers("/consumo-energia/**").hasRole("ADMIN")
                 .requestMatchers("/statusDispositivos/**").hasRole("ADMIN")
                 .requestMatchers("/usuarios/**").hasRole("ADMIN")
-                // Outros endpoints não são restritos
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic();  // Usa autenticação básica
+                .httpBasic();
 
         return http.build();
     }
