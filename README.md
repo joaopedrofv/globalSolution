@@ -1,4 +1,4 @@
-# SICE: Solução Inteligente para Gestão Energética  
+# SICE: Solução Inteligente para Controle Energético
 
 ## **Introdução**  
 A Global Solution, este ano, firmou parcerias com diversas empresas líderes no setor de energias renováveis e limpas no atual cenário mundial. O objetivo é que as turmas da FIAP proponham uma solução tecnológica ou até mesmo um modelo de negócio que tenha impacto positivo nessa área, abordando não apenas questões energéticas, mas também promovendo justiça social e crescimento econômico.
@@ -8,7 +8,7 @@ A Global Solution, este ano, firmou parcerias com diversas empresas líderes no 
 [Link do vídeo.](https://www.youtube.com/watch?v=yUlYOG-bqCk&ab_channel=Jo%C3%A3oPedro)
 
 ## **Objetivo**  
-O **SICE (Solução Inteligente para Gestão Energética)** é um dispositivo inovador que atua como uma central de monitoramento de energia para locais comerciais e residenciais. Ele busca promover a eficácia energética, evitando desperdícios e contribuindo para a sustentabilidade ambiental. Além disso, oferece maior transparência no gerenciamento da relação gasto/consumo.  
+O **SICE (Solução Inteligente para Controle Energético)** é um dispositivo inovador que atua como uma central de monitoramento de energia para locais comerciais e residenciais. Ele busca promover a eficácia energética, evitando desperdícios e contribuindo para a sustentabilidade ambiental. Além disso, oferece maior transparência no gerenciamento da relação gasto/consumo.  
 
 ### **Funcionalidades**  
 - **Corte de luz sem a necessidade de funcionário**  
@@ -49,7 +49,7 @@ Com a aplicação rodando, o usuário pode acessar a interface Swagger em [http:
 - **Administrador:** `admin` / `admin` (acesso total a todas as requisições)
 - **Usuário comum:** `user` / `password` (acesso restrito a algumas requisições)
 
-[Vídeo explicativo.](https://www.youtube.com/watch?v=MIxtdDENVyA&ab_channel=Jo%C3%A3oPedro)
+[Vídeo explicativo.](https://youtu.be/uTedHQRiVjk)
 
 ## Tecnologias e Funcionalidades Utilizadas
 
@@ -96,7 +96,7 @@ Com a aplicação rodando, o usuário pode acessar a interface Swagger em [http:
 ![Diagrama de classe](images/Classes.png)
 
 ## DER
-![Diagrama DER](images/DER.png)
+![Diagrama DER](images/DER.jpg)
 
 ## Autores
 
