@@ -45,7 +45,8 @@ public class ConsumoEnergiaController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Consumo de energia criado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.",
-                    content = @Content(schema = @Schema()))
+                    content = @Content(schema = @Schema())),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @PostMapping
     public ResponseEntity<ConsumoEnergiaResponse> create(@Valid @RequestBody ConsumoEnergiaRequest request) {
@@ -65,7 +66,8 @@ public class ConsumoEnergiaController {
             description = "Busca todos os registros de consumo de energia existentes.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Nenhum registro de consumo de energia encontrado."),
-            @ApiResponse(responseCode = "200", description = "Lista de consumos de energia retornada com sucesso!")
+            @ApiResponse(responseCode = "200", description = "Lista de consumos de energia retornada com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @GetMapping
     public ResponseEntity<List<ConsumoEnergiaResponse>> readAll(@RequestParam(value = "page", defaultValue = "0") int page,
@@ -90,7 +92,8 @@ public class ConsumoEnergiaController {
             description = "Busca um registro de consumo de energia existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Consumo de energia não encontrado."),
-            @ApiResponse(responseCode = "200", description = "Consumo de energia encontrado com sucesso!")
+            @ApiResponse(responseCode = "200", description = "Consumo de energia encontrado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @GetMapping("/{id}")
     public ResponseEntity<ConsumoEnergiaResponse> read(@PathVariable Long id) {
@@ -109,7 +112,8 @@ public class ConsumoEnergiaController {
             description = "Atualiza um registro de consumo de energia existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Consumo de energia não encontrado."),
-            @ApiResponse(responseCode = "200", description = "Consumo de energia atualizado com sucesso!")
+            @ApiResponse(responseCode = "200", description = "Consumo de energia atualizado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @PutMapping("/{id}")
     public ResponseEntity<ConsumoEnergiaResponse> update(
@@ -134,7 +138,8 @@ public class ConsumoEnergiaController {
             description = "Exclui um registro de consumo de energia de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Consumo de energia não encontrado."),
-            @ApiResponse(responseCode = "200", description = "Consumo de energia excluído com sucesso!")
+            @ApiResponse(responseCode = "200", description = "Consumo de energia excluído com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

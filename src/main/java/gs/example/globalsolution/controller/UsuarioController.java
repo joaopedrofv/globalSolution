@@ -42,7 +42,8 @@ public class UsuarioController {
             description = "Cria um novo usuário de acordo com os dados proferidos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Usuário criado com sucesso!"),
-            @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.")
+            @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente."),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @PostMapping
     public ResponseEntity<UsuarioResponse> create(@Valid @RequestBody UsuarioRequest request) {
@@ -62,7 +63,8 @@ public class UsuarioController {
             description = "Busca todos os usuários existentes com paginação.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Nenhum usuário encontrado."),
-            @ApiResponse(responseCode = "200", description = "Lista de usuários retornada com sucesso!")
+            @ApiResponse(responseCode = "200", description = "Lista de usuários retornada com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @GetMapping
     public ResponseEntity<List<UsuarioResponse>> readAll(
@@ -89,7 +91,8 @@ public class UsuarioController {
             description = "Busca um usuário existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado."),
-            @ApiResponse(responseCode = "200", description = "Usuário encontrado com sucesso!")
+            @ApiResponse(responseCode = "200", description = "Usuário encontrado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioResponse> read(@PathVariable Long id) {
@@ -108,7 +111,8 @@ public class UsuarioController {
             description = "Atualiza um usuário existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado."),
-            @ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso!")
+            @ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioResponse> update(
@@ -133,7 +137,8 @@ public class UsuarioController {
             description = "Exclui um usuário existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado."),
-            @ApiResponse(responseCode = "200", description = "Usuário excluído com sucesso!")
+            @ApiResponse(responseCode = "200", description = "Usuário excluído com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

@@ -42,7 +42,8 @@ public class StatusDispositivosController {
             description = "Cria um novo status para o dispositivo de acordo com os dados proferidos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Status do dispositivo criado com sucesso!"),
-            @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.")
+            @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente."),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @PostMapping
     public ResponseEntity<StatusDispositivosResponse> create(@Valid @RequestBody StatusDispositivosRequest request) {
@@ -62,7 +63,8 @@ public class StatusDispositivosController {
             description = "Busca todos os status de dispositios existentes.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Nenhum status encontrado."),
-            @ApiResponse(responseCode = "200", description = "Lista de status retornada com sucesso!")
+            @ApiResponse(responseCode = "200", description = "Lista de status retornada com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @GetMapping
     public ResponseEntity<List<StatusDispositivosResponse>> readAll(
@@ -89,7 +91,8 @@ public class StatusDispositivosController {
             description = "Busca um status de dispositivo existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Status não encontrado."),
-            @ApiResponse(responseCode = "200", description = "Status encontrado com sucesso!")
+            @ApiResponse(responseCode = "200", description = "Status encontrado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @GetMapping("/{id}")
     public ResponseEntity<StatusDispositivosResponse> read(@PathVariable Long id) {
@@ -108,7 +111,8 @@ public class StatusDispositivosController {
             description = "Atualiza um status de dispositivo existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Status não encontrado."),
-            @ApiResponse(responseCode = "200", description = "Status atualizado com sucesso!")
+            @ApiResponse(responseCode = "200", description = "Status atualizado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @PutMapping("/{id}")
     public ResponseEntity<StatusDispositivosResponse> update(
@@ -133,7 +137,8 @@ public class StatusDispositivosController {
             description = "Exclui um status de dispositivo existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Status não encontrado."),
-            @ApiResponse(responseCode = "200", description = "Status excluído com sucesso!")
+            @ApiResponse(responseCode = "200", description = "Status excluído com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

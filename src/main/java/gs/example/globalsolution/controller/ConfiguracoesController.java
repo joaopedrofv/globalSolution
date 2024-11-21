@@ -46,7 +46,8 @@ public class ConfiguracoesController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Configuração criada com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.",
-                    content = @Content(schema = @Schema()))
+                    content = @Content(schema = @Schema())),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @PostMapping
     public ResponseEntity<ConfiguracoesResponse> create(@Valid @RequestBody ConfiguracoesRequest request) {
@@ -66,7 +67,8 @@ public class ConfiguracoesController {
             description = "Busca todas informações de dispositivos existentes com paginação.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Nenhuma configuração encontrada."),
-            @ApiResponse(responseCode = "200", description = "Lista de configurações retornada com sucesso!")
+            @ApiResponse(responseCode = "200", description = "Lista de configurações retornada com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @GetMapping
     public ResponseEntity<List<ConfiguracoesResponse>> readAll(
@@ -94,7 +96,8 @@ public class ConfiguracoesController {
             description = "Busca uma configuração de dispositivo existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Configuração não encontrada."),
-            @ApiResponse(responseCode = "200", description = "Configuração encontrada com sucesso!")
+            @ApiResponse(responseCode = "200", description = "Configuração encontrada com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @GetMapping("/{id}")
     public ResponseEntity<ConfiguracoesResponse> read(@PathVariable Long id) {
@@ -113,7 +116,8 @@ public class ConfiguracoesController {
             description = "Atualiza a configuração de um dispositivo existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Configuração não encontrada."),
-            @ApiResponse(responseCode = "200", description = "Configuração atualizada com sucesso!")
+            @ApiResponse(responseCode = "200", description = "Configuração atualizada com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @PutMapping("/{id}")
     public ResponseEntity<ConfiguracoesResponse> update(
@@ -138,7 +142,8 @@ public class ConfiguracoesController {
             description = "Exclui uma configuração de dispositivo existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Configuração não encontrada."),
-            @ApiResponse(responseCode = "200", description = "Configuração excluída com sucesso!")
+            @ApiResponse(responseCode = "200", description = "Configuração excluída com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {

@@ -44,7 +44,8 @@ public class FaturasController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Fatura criada com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.",
-                    content = @Content(schema = @Schema()))
+                    content = @Content(schema = @Schema())),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @RolesAllowed("ADMIN")
     @PostMapping
@@ -137,7 +138,8 @@ public class FaturasController {
             description = "Exclui uma fatura existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Fatura não encontrada."),
-            @ApiResponse(responseCode = "200", description = "Fatura excluída com sucesso!")
+            @ApiResponse(responseCode = "200", description = "Fatura excluída com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @RolesAllowed("ADMIN")
     @DeleteMapping("/{id}")

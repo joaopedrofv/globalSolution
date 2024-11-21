@@ -41,7 +41,8 @@ public class NotificacoesController {
             description = "Cria uma nova notificação de acordo com os dados proferidos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Notificação criada com sucesso!"),
-            @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.")
+            @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente."),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @RolesAllowed("ADMIN")
     @PostMapping
@@ -108,7 +109,8 @@ public class NotificacoesController {
             description = "Atualiza uma notificação existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Notificação não encontrada."),
-            @ApiResponse(responseCode = "200", description = "Notificação atualizada com sucesso!")
+            @ApiResponse(responseCode = "200", description = "Notificação atualizada com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @RolesAllowed("ADMIN")
     @PutMapping("/{id}")

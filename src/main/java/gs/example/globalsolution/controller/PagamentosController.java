@@ -134,7 +134,8 @@ public class PagamentosController {
             description = "Exclui um pagamento existente de acordo com o ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Pagamento não encontrado."),
-            @ApiResponse(responseCode = "200", description = "Pagamento excluído com sucesso!")
+            @ApiResponse(responseCode = "200", description = "Pagamento excluído com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @RolesAllowed("ADMIN")
     @DeleteMapping("/{id}")

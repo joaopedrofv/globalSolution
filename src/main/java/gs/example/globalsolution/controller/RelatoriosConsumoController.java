@@ -41,7 +41,8 @@ public class RelatoriosConsumoController {
             description = "Cria um novo relatório de consumo de acordo com os dados proferidos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Relatório de consumo criado com sucesso!"),
-            @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente.")
+            @ApiResponse(responseCode = "400", description = "Atributos inválidos ou ID já existente."),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @RolesAllowed("ADMIN")
     @PostMapping
@@ -108,7 +109,8 @@ public class RelatoriosConsumoController {
             description = "Atualiza um relatório de consumo existente de acordo com ID associado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "Relatório não encontrado."),
-            @ApiResponse(responseCode = "200", description = "Relatório atualizado com sucesso!")
+            @ApiResponse(responseCode = "200", description = "Relatório atualizado com sucesso!"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado - usuário não tem permissão para acessar este recurso.")
     })
     @RolesAllowed("ADMIN")
     @PutMapping("/{id}")
