@@ -102,11 +102,14 @@ public class FaturasController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Link selfLink = linkTo(methodOn(FaturasController.class).read(id)).withSelfRel();
-        FaturasResponse response = faturasMapper.toResponse(fatura.get(), selfLink);
+        Link listaLink = linkTo(methodOn(FaturasController.class).readAll(0, 10))
+                .withRel("Lista de faturas");
+
+        FaturasResponse response = faturasMapper.toResponse(fatura.get(), listaLink);
 
         return ResponseEntity.ok(response);
     }
+
 
     @Operation(summary = "Atualizar fatura.",
             description = "Atualiza uma fatura existente de acordo com o ID associado.")
@@ -125,7 +128,7 @@ public class FaturasController {
         }
 
         Faturas faturas = faturasMapper.toEntity(request);
-        faturas.setId(id); // Garante que o ID não será alterado
+        faturas.setId(id);
         Faturas atualizado = faturasRepository.save(faturas);
 
         Link selfLink = linkTo(methodOn(FaturasController.class).read(id)).withSelfRel();

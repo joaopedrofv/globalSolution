@@ -33,7 +33,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @RequestMapping(value = "/configuracoes", produces = {"application/json"})
 @Tag(name = "Configurações", description = "Operações relacionadas a configurações de dispositivos.")
-@PreAuthorize("hasRole('ADMIN')") // Garante que somente administradores terão acesso a todas as operações do controlador
+@PreAuthorize("hasRole('ADMIN')")
 public class ConfiguracoesController {
 
     @Autowired
@@ -75,7 +75,7 @@ public class ConfiguracoesController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
 
-        Pageable pageable = PageRequest.of(page, size); // Cria um Pageable com base nos parâmetros page e size
+        Pageable pageable = PageRequest.of(page, size);
         Page<Configuracoes> configuracoesPage = configuracoesRepository.findAll(pageable);
 
         if (configuracoesPage.isEmpty()) {
@@ -106,8 +106,10 @@ public class ConfiguracoesController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Link selfLink = linkTo(methodOn(ConfiguracoesController.class).read(id)).withSelfRel();
-        ConfiguracoesResponse response = configuracoesMapper.configuracoesToResponseDTO(configuracao.get(), selfLink);
+        Link listaLink = linkTo(methodOn(ConfiguracoesController.class).readAll(0, 10))
+                .withRel("Lista de configurações");
+
+        ConfiguracoesResponse response = configuracoesMapper.configuracoesToResponseDTO(configuracao.get(), listaLink);
 
         return ResponseEntity.ok(response);
     }
@@ -129,7 +131,7 @@ public class ConfiguracoesController {
         }
 
         Configuracoes configuracao = configuracoesMapper.requestToConfiguracoes(request);
-        configuracao.setId(id); // Garante a atualização do registro existente
+        configuracao.setId(id);
         Configuracoes atualizado = configuracoesRepository.save(configuracao);
 
         Link selfLink = linkTo(methodOn(ConfiguracoesController.class).read(id)).withSelfRel();

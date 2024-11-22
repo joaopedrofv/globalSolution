@@ -30,7 +30,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @RequestMapping(value = "/statusDispositivos", produces = {"application/json"})
 @Tag(name = "Status de Dispositivos", description = "Operações relacionadas aos status dos dispositivos.")
-@PreAuthorize("hasRole('ADMIN')") // Garante que somente administradores terão acesso a todas as operações do controlador
+@PreAuthorize("hasRole('ADMIN')")
 public class StatusDispositivosController {
 
     @Autowired
@@ -101,11 +101,14 @@ public class StatusDispositivosController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Link selfLink = linkTo(methodOn(StatusDispositivosController.class).read(id)).withSelfRel();
-        StatusDispositivosResponse response = statusDispositivosMapper.toResponse(status.get(), selfLink);
+        Link listaLink = linkTo(methodOn(StatusDispositivosController.class).readAll(0, 10))
+                .withRel("Lista de status");
+
+        StatusDispositivosResponse response = statusDispositivosMapper.toResponse(status.get(), listaLink);
 
         return ResponseEntity.ok(response);
     }
+
 
     @Operation(summary = "Atualizar status de dispositivo.",
             description = "Atualiza um status de dispositivo existente de acordo com o ID associado.")
@@ -124,7 +127,7 @@ public class StatusDispositivosController {
         }
 
         StatusDispositivos statusDispositivos = statusDispositivosMapper.toEntity(request);
-        statusDispositivos.setId(id); // Garante que o ID não será alterado
+        statusDispositivos.setId(id);
         StatusDispositivos atualizado = statusDispositivosRepository.save(statusDispositivos);
 
         Link selfLink = linkTo(methodOn(StatusDispositivosController.class).read(id)).withSelfRel();

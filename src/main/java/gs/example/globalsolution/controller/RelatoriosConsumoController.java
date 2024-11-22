@@ -99,11 +99,14 @@ public class RelatoriosConsumoController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Link selfLink = linkTo(methodOn(RelatoriosConsumoController.class).read(id)).withSelfRel();
-        RelatoriosConsumoResponse response = relatoriosConsumoMapper.toResponse(relatorio.get(), selfLink);
+        Link listaLink = linkTo(methodOn(RelatoriosConsumoController.class).readAll(0, 10))
+                .withRel("Lista de relatórios");
+
+        RelatoriosConsumoResponse response = relatoriosConsumoMapper.toResponse(relatorio.get(), listaLink);
 
         return ResponseEntity.ok(response);
     }
+
 
     @Operation(summary = "Atualizar relatório de consumo.",
             description = "Atualiza um relatório de consumo existente de acordo com ID associado.")
@@ -123,7 +126,7 @@ public class RelatoriosConsumoController {
         }
 
         RelatoriosConsumo relatoriosConsumo = relatoriosConsumoMapper.toEntity(request);
-        relatoriosConsumo.setId(id); // Garante que o ID não será alterado
+        relatoriosConsumo.setId(id);
         RelatoriosConsumo atualizado = relatoriosConsumoRepository.save(relatoriosConsumo);
 
         Link selfLink = linkTo(methodOn(RelatoriosConsumoController.class).read(id)).withSelfRel();

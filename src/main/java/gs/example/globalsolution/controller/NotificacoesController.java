@@ -99,11 +99,14 @@ public class NotificacoesController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Link selfLink = linkTo(methodOn(NotificacoesController.class).read(id)).withSelfRel();
-        NotificacoesResponse response = notificacoesMapper.toResponse(notificacao.get(), selfLink);
+        Link listaLink = linkTo(methodOn(NotificacoesController.class).readAll(0, 10))
+                .withRel("Lista de notificações");
+
+        NotificacoesResponse response = notificacoesMapper.toResponse(notificacao.get(), listaLink);
 
         return ResponseEntity.ok(response);
     }
+
 
     @Operation(summary = "Atualizar notificação.",
             description = "Atualiza uma notificação existente de acordo com o ID associado.")
@@ -123,7 +126,7 @@ public class NotificacoesController {
         }
 
         Notificacoes notificacoes = notificacoesMapper.toEntity(request);
-        notificacoes.setId(id); // Garante que o ID não será alterado
+        notificacoes.setId(id);
         Notificacoes atualizado = notificacoesRepository.save(notificacoes);
 
         Link selfLink = linkTo(methodOn(NotificacoesController.class).read(id)).withSelfRel();

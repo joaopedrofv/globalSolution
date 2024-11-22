@@ -9,7 +9,7 @@ import java.sql.Date;
 
 public record ConsumoEnergiaResponse (
         Long id,
-        CadastroDispositivos cadastroDispositivos,  // Opcional se não for marcado como NOT NULL
+        CadastroDispositivos cadastroDispositivos,
         Date dataHora,
         Integer consumoKWH,
         Integer precoKWH,

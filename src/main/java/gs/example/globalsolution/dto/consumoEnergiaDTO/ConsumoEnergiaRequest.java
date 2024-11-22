@@ -9,7 +9,7 @@ import java.sql.Date;
 public record ConsumoEnergiaRequest (
         @NotNull(message = "O ID do consumo de energia não pode ser nulo.")
         Long id,
-        CadastroDispositivos cadastroDispositivos,  // Opcional se não for marcado como NOT NULL
+        CadastroDispositivos cadastroDispositivos,
         @NotNull(message = "A data e hora do consumo de energia não podem ser nulas.")
         Date dataHora,
         @NotNull(message = "O consumo de energia em KWH não pode ser nulo.")

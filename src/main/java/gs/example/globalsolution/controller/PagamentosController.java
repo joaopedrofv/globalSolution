@@ -98,8 +98,10 @@ public class PagamentosController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Link selfLink = linkTo(methodOn(PagamentosController.class).read(id)).withSelfRel();
-        PagamentosResponse response = pagamentosMapper.toResponse(pagamento.get(), selfLink);
+        Link listaLink = linkTo(methodOn(PagamentosController.class).readAll(0, 10))
+                .withRel("Lista de pagamentos");
+
+        PagamentosResponse response = pagamentosMapper.toResponse(pagamento.get(), listaLink);
 
         return ResponseEntity.ok(response);
     }
@@ -121,7 +123,7 @@ public class PagamentosController {
         }
 
         Pagamentos pagamentos = pagamentosMapper.toEntity(request);
-        pagamentos.setId(id); // Garante que o ID não será alterado
+        pagamentos.setId(id);
         Pagamentos atualizado = pagamentosRepository.save(pagamentos);
 
         Link selfLink = linkTo(methodOn(PagamentosController.class).read(id)).withSelfRel();

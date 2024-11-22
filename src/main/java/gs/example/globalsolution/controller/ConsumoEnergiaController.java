@@ -32,7 +32,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @RequestMapping(value = "/consumo-energia", produces = {"application/json"})
 @Tag(name = "Consumo de Energia", description = "Operações relacionadas a registros de consumo de energia.")
-@PreAuthorize("hasRole('ADMIN')") // Garante que somente administradores terão acesso a todas as operações do controlador
+@PreAuthorize("hasRole('ADMIN')")
 public class ConsumoEnergiaController {
 
     @Autowired
@@ -102,8 +102,10 @@ public class ConsumoEnergiaController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Link selfLink = linkTo(methodOn(ConsumoEnergiaController.class).read(id)).withSelfRel();
-        ConsumoEnergiaResponse response = consumoEnergiaMapper.consumoEnergiaToResponseDTO(consumo.get(), selfLink);
+        Link listaLink = linkTo(methodOn(ConsumoEnergiaController.class).readAll(0, 10))
+                .withRel("Lista de consumos de energia");
+
+        ConsumoEnergiaResponse response = consumoEnergiaMapper.consumoEnergiaToResponseDTO(consumo.get(), listaLink);
 
         return ResponseEntity.ok(response);
     }
@@ -125,7 +127,7 @@ public class ConsumoEnergiaController {
         }
 
         ConsumoEnergia consumoEnergia = consumoEnergiaMapper.requestToConsumoEnergia(request);
-        consumoEnergia.setId(id); // Garante a atualização do registro existente
+        consumoEnergia.setId(id);
         ConsumoEnergia atualizado = consumoEnergiaRepository.save(consumoEnergia);
 
         Link selfLink = linkTo(methodOn(ConsumoEnergiaController.class).read(id)).withSelfRel();

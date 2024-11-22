@@ -30,7 +30,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @RequestMapping(value = "/usuarios", produces = {"application/json"})
 @Tag(name = "Usuários", description = "Operações relacionadas a usuários.")
-@PreAuthorize("hasRole('ADMIN')") // Garante que somente administradores terão acesso a todas as operações do controlador
+@PreAuthorize("hasRole('ADMIN')")
 public class UsuarioController {
 
     @Autowired
@@ -101,8 +101,9 @@ public class UsuarioController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Link selfLink = linkTo(methodOn(UsuarioController.class).read(id)).withSelfRel();
-        UsuarioResponse response = usuarioMapper.toResponse(usuario.get(), selfLink);
+        Link listaLink = linkTo(methodOn(UsuarioController.class).readAll(0, 10))
+                .withRel("Lista de usuários");
+        UsuarioResponse response = usuarioMapper.toResponse(usuario.get(), listaLink);
 
         return ResponseEntity.ok(response);
     }
@@ -124,7 +125,7 @@ public class UsuarioController {
         }
 
         Usuario usuario = usuarioMapper.toEntity(request);
-        usuario.setId(id); // Garante que o ID não será alterado
+        usuario.setId(id);
         Usuario atualizado = usuarioRepository.save(usuario);
 
         Link selfLink = linkTo(methodOn(UsuarioController.class).read(id)).withSelfRel();
