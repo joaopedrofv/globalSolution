@@ -5,7 +5,7 @@ A Global Solution, este ano, firmou parcerias com diversas empresas líderes no 
 
 ### Link do Vídeo da Proposta Tecnológica
 
-[Link do vídeo.](https://www.youtube.com/watch?v=yUlYOG-bqCk&ab_channel=Jo%C3%A3oPedro)
+[Link do vídeo.](https://www.youtube.com/watch?v=v6g-iiOYAG4&ab_channel=Jo%C3%A3oPedro)
 
 ## **Objetivo**  
 O **SICE (Solução Inteligente para Controle Energético)** é um dispositivo inovador que atua como uma central de monitoramento de energia para locais comerciais e residenciais. Ele busca promover a eficácia energética, evitando desperdícios e contribuindo para a sustentabilidade ambiental. Além disso, oferece maior transparência no gerenciamento da relação gasto/consumo.  
@@ -50,6 +50,9 @@ Com a aplicação rodando, o usuário pode acessar a interface Swagger em [http:
 - **Usuário comum:** `user` / `password` (acesso restrito a algumas requisições)
 
 [Vídeo explicativo.](https://youtu.be/uTedHQRiVjk)
+
+## **Deploy em Nuvem**
+[Vídeo do deploy](https://www.youtube.com/watch?v=sZCrnkuonv0&ab_channel=Jo%C3%A3oPedro)
 
 ## Tecnologias e Funcionalidades Utilizadas
 
